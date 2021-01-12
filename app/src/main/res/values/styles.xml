@@ -5,7 +5,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/lock_theme4</item>
+        <item name="android:background">@drawable/gradient4</item>
     </style>
 
     <style name="stufa_layout">
@@ -20,53 +20,74 @@
         <item name="android:textStyle">bold|italic</item>
     </style>
 
+    <style name="stufa_layout_main_screen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/berkshire_swash</item>
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textColor">@android:color/holo_orange_light</item>
+        <item name="android:textSize">@dimen/char_text_size</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
     <style name="tv_student_financial_Assistant">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_marginTop">@dimen/switch_margin_start</item>
-        <item name="android:text">@string/student_financial_assistance</item>
+        <item name="android:text">@string/student_financial_assistance_app</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">@dimen/tv_student_text_size</item>
+        <item name="android:textSize">@dimen/message_text_size</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="til_username_login_style">
+    <style name="tv_student_financial_Assistant_main_screen">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/username_margin_top</item>
-        <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
-        <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:text">@string/student_financial_assistance_app</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/message_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="til_username_login_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="errorEnabled">true</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="startIconDrawable">@drawable/person</item>
         <item name="android:hint">@string/please_enter_your_username</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="username_login_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textEmailAddress</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
-    <style name="til_enter_your_password_style">
+    <style name="til_enter_your_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/password_margin_top</item>
-        <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
-        <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/lock</item>
+        <item name="endIconMode">password_toggle</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/please_enter_your_password</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="enter_your_password_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
     <style name="button_login">
@@ -74,7 +95,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/button_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/button_margin_start</item>
-        <item name="android:layout_marginTop">@dimen/login_button_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/password_margin_top</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/login</item>
@@ -89,18 +110,18 @@
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/forgot_password</item>
         <item name="android:textSize">@dimen/tv_text_size</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@android:color/holo_orange_light</item>
     </style>
 
     <style name="tv_dont_have_an_account">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_marginTop">@dimen/char_text_size</item>
+        <item name="android:layout_marginTop">@dimen/switch_margin_start</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/dont_have_an_account_create_one_here</item>
         <item name="android:textSize">@dimen/dont_have_account_text_size</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@android:color/holo_orange_light</item>
     </style>
 
     <style name="content_layout">
@@ -109,63 +130,70 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="til_firstname_style">
+    <style name="til_firstname_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
         <item name="startIconDrawable">@drawable/person</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/firstname</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="firstname_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPersonName</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
-    <style name="til_lastname_style">
+    <style name="til_lastname_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/switch_margin_start</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
         <item name="startIconDrawable">@drawable/person</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/lastname</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="lastname_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPersonName</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
-    <style name="til_username_style">
+    <style name="til_username_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/switch_margin_start</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
         <item name="startIconDrawable">@drawable/email</item>
         <item name="errorEnabled">true</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/username_email</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="username_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textEmailAddress</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
     <style name="tv_select_your_campus">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
-        <item name="android:gravity">center_horizontal</item>
         <item name="android:text">@string/select_your_campus</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
@@ -176,6 +204,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:text">@string/bloemfontein_campus</item>
@@ -189,60 +218,69 @@
         <item name= "android:textColor">@color/light_red</item>
     </style>
 
-    <style name="til_student_number_style">
+    <style name="til_student_number_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/til_margin_top</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/card</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/student_number</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
     </style>
 
     <style name="student_number_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">number</item>
+        <item name="android:background">#70FFFFFF</item>
+        <item name="counterEnabled">true</item>
+        <item name="counterMaxLength">@dimen/counter_max</item>
     </style>
 
-    <style name="til_enter_password_style">
+    <style name="til_enter_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/til_margin_top</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
         <item name="endIconMode">password_toggle</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/lock</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/enter_password</item>
+        <item name="android:textColorHint">#FFFFFF</item>
     </style>
 
     <style name="enter_password_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
-    <style name="til_confirm_password_style">
+    <style name="til_confirm_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/til_margin_top</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
         <item name="endIconMode">password_toggle</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/lock</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/confirm_password</item>
+        <item name="android:textColorHint">#FFFFFF</item>
     </style>
 
     <style name="confirm_password_text_input_edit_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
+        <item name="android:background">#70FFFFFF</item>
     </style>
 
     <style name="button_create_account">
@@ -264,7 +302,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/already_have_an_account</item>
-        <item name="android:textSize">@dimen/tv_text_size</item>
+        <item name="android:textSize">@dimen/campus_name_text_size</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
@@ -356,13 +394,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
         <item name="android:visibility">gone</item>
+        <item name="android:layout_marginStart">@dimen/stufa_margin_top</item>
     </style>
 
     <style name="progress_bar_style">
         <item name="android:layout_width">@dimen/tvProgressbar_layout_weight</item>
         <item name="android:layout_height">@dimen/tvProgressbar_layout_weight</item>
         <item name="android:layout_marginTop">@dimen/tvProgressbar_margin_top</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/already_have_an_account</item>
         <item name="android:textSize">@dimen/tv_text_size</item>

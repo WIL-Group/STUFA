@@ -2,11 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/authentications_layout"
-    tools:context=".CreateAccount">
+    tools:context=".activities.CreateAccount">
 
     <LinearLayout
         android:id="@+id/contentLayout"
         style="@style/content_layout">
+
+        <ImageView
+            android:id="@+id/imLogo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="5dp"
+            android:transitionName="logo_image"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/assistance_logo"/>
+
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="logo_text"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:text="Create Account"
+            android:textSize="25sp"
+            android:fontFamily="@font/berkshire_swash"
+            android:textColor="@android:color/holo_orange_light"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFirstName"
@@ -14,7 +35,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
-                style="@style/firstname_text_input_edit_text"/>
+                style="@style/firstname_text_input_edit_text"
+                android:transitionName="et_first_name_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -23,7 +45,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSurname"
-                style="@style/lastname_text_input_edit_text"/>
+                style="@style/lastname_text_input_edit_text"
+                android:transitionName="et_last_name_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -32,46 +55,19 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
-                style="@style/username_text_input_edit_text"/>
+                style="@style/username_text_input_edit_text"
+                android:transitionName="et_username_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textView3"
-            style="@style/tv_select_your_campus"/>
-
-<!--        <RadioGroup-->
-<!--            android:id="@+id/rgCampus"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginStart="20dp"-->
-<!--            android:layout_marginEnd="20dp">-->
-
-<!--            <RadioButton-->
-<!--                android:id="@+id/rbBloemCampus"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="Bloemfontein Campus"-->
-<!--                android:textColor="#FFFFFF"-->
-<!--                android:textSize="15sp"-->
-<!--                android:textStyle="bold"/>-->
-
-<!--            <RadioButton-->
-<!--                android:id="@+id/rbWelkomCampus"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="Welkom Campus"-->
-<!--                android:textColor="#FFFFFF"-->
-<!--                android:textSize="15sp"-->
-<!--                android:textStyle="bold"/>-->
-<!--        </RadioGroup>-->
-
+            style="@style/tv_select_your_campus"
+            android:transitionName="tv_select_campus_trans"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchPos"
-            style="@style/switchPos"/>
+            style="@style/switchPos"
+            android:transitionName="sw_campus_name_trans"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilStudentNumber"
@@ -79,7 +75,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etStudentNumber"
-                style="@style/student_number_text_input_edit_text"/>
+                style="@style/student_number_text_input_edit_text"
+                android:transitionName="et_student_number_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +85,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
-                style="@style/enter_password_text_input_edit_text" />
+                style="@style/enter_password_text_input_edit_text"
+                android:transitionName="et_enter_password_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,16 +95,19 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfirmPassword"
-                style="@style/confirm_password_text_input_edit_text"/>
+                style="@style/confirm_password_text_input_edit_text"
+                android:transitionName="et_confirm_password_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignUp"
-            style="@style/button_create_account"/>
+            style="@style/button_create_account"
+            android:transitionName="btn_sign_up_trans"/>
 
         <TextView
             android:id="@+id/tvLogin"
-            style="@style/tv_already_have_an_account"/>
+            style="@style/tv_already_have_an_account"
+            android:transitionName="tv_already_have_account_trans"/>
 
     </LinearLayout>
 

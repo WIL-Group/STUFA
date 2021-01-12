@@ -1,20 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/authentications_layout"
-    tools:context=".Login">
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient4"
+    android:padding="20dp"
+    tools:context=".activities.Login">
 
     <LinearLayout
         android:id="@+id/contentLayout"
         style="@style/content_layout">
 
-        <TextView
-            android:id="@+id/textView"
-            style="@style/stufa_layout"/>
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:transitionName="logo_image"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/assistance_logo"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            style="@style/stufa_layout"/>-->
 
         <TextView
-            android:id="@+id/textView2"
-            style="@style/tv_student_financial_Assistant"/>
+            android:id="@+id/tvLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="logo_text"
+            android:layout_marginTop="10dp"
+            android:text="Hello, Welcome to STUFA"
+            android:textSize="40sp"
+            android:fontFamily="@font/berkshire_swash"
+            android:textColor="@android:color/holo_orange_light"/>
+
+        <TextView
+            android:id="@+id/tvSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Login to continue"
+            android:transitionName="tv_login_to_continue_trans"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:fontFamily="@font/berkshire_swash"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUserName"
@@ -22,7 +52,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
-                style="@style/username_login_text_input_edit_text"/>
+                style="@style/username_login_text_input_edit_text"
+                android:transitionName="et_enter_username_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -31,20 +62,24 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
-                style="@style/enter_your_password_text_input_edit_text" />
+                style="@style/enter_your_password_text_input_edit_text"
+                android:transitionName="et_enter_password_trans"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnLogin"
-            style="@style/button_login"/>
+            style="@style/button_login"
+            android:transitionName="btn_login_trans"/>
 
         <TextView
             android:id="@+id/tvForgotPassword"
-            style="@style/tv_forgot_password"/>
+            style="@style/tv_forgot_password"
+            android:transitionName="tv_forgot_password_trans"/>
 
         <TextView
             android:id="@+id/tvCreateAccount"
-            style="@style/tv_dont_have_an_account" />
+            style="@style/tv_dont_have_an_account"
+            android:transitionName="tv_create_account_trans"/>
 
     </LinearLayout>
 
@@ -58,8 +93,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="150dp"
-            android:layout_gravity="center_horizontal"/>
-
+            android:gravity="center_horizontal"/>
     </LinearLayout>
 
 </LinearLayout>

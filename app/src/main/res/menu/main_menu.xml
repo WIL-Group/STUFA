@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_refresh_bookings"
+            android:icon="@drawable/refresh"
+            android:title="Refresh Bookings" />
+
+        <item
+            android:id="@+id/nav_announcements"
+            android:icon="@drawable/announcement"
+            android:title="Announcements" />
+
+        <item
+            android:id="@+id/nav_create_query"
+            android:icon="@drawable/query"
+            android:title="Create Query" />
+
+        <item
+            android:id="@+id/nav_create_request"
+            android:icon="@drawable/request"
+            android:title="Create Request" />
+
+
+        <item
+            android:id="@+id/nav_create_booking"
+            android:icon="@drawable/booking"
+            android:title="Create Booking" />
+
+
+    </group>
+
+
+    <item android:title="Profile">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/lock"
+                    android:title="Login" />
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/person"
+                    android:title="Profile" />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/lock_out"
+                    android:title="Logout" />
+
+            </group>
+        </menu>
+
+    </item>
+
+
+</menu>

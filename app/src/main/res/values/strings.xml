@@ -2,7 +2,7 @@
 
     <string name="app_name">STUFA</string>
     <string name="stufa">STUFA</string>
-    <string name="student_financial_assistance">Student Financial Assistance</string>
+    <string name="student_financial_assistance_app">Student Financial Assistance App</string>
     <string name="bloemfontein_campus">Bloemfontein Campus</string>
     <string name="welkom_campus">Welkom Campus</string>
     <string name="bloemfontein">Bloemfontein</string>
@@ -53,6 +53,8 @@
     <string name="this_allows_clearance">- This allows the Student to request financial clearance</string>
     <string name="fill_form">Fill in a form</string>
     <string name="this_allows_fill_form">- This allows the Student to fill in a form</string>
-
-
+    <string name="todo">TODO</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="empty"></string>
 </resources>

@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="@string/refresh_bookings"
-        android:id="@+id/refresh"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:icon="@drawable/refresh"/>
-
     <item android:title="@string/logout"
         android:id="@+id/logout"
         android:orderInCategory="100"

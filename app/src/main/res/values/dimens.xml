@@ -4,12 +4,14 @@
     <!--  Weight sizes  -->
     <dimen name="greeting_weight">2</dimen>
     <dimen name="fullname_weight">1</dimen>
+    <dimen name="counter_max">8</dimen>
 
     <!--  Display padding sizes  -->
     <dimen name="tvProgressbar_layout_weight">250dp</dimen>
     <dimen name="tvProgressbar_margin_top">150dp</dimen>
     <dimen name="username_margin_top">100dp</dimen>
     <dimen name="button_margin_start">70dp</dimen>
+    <dimen name="progress_bar_margin_start">60dp</dimen>
     <dimen name="tv_fullname_margin_end">55dp</dimen>
     <dimen name="buttons_margin_top">50dp</dimen>
     <dimen name="login_button_margin_top">45dp</dimen>
@@ -23,6 +25,7 @@
     <dimen name="tv_margin_top">3dp</dimen>
     <dimen name="til_margin_top">1dp</dimen>
     <dimen name="full_name_width">0dp</dimen>
+    <dimen name="no_margin_top">-10dp</dimen>
 
     <!--  Text sizes  -->
     <dimen name="char_text_size">48sp</dimen>

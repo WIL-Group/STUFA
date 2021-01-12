@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.STUFA">
-        <activity android:name=".FillForm"></activity>
-        <activity android:name=".CreateRequest" />
-        <activity android:name=".CreateBooking" />
-        <activity android:name=".CreateQuery" />
-        <activity android:name=".ForgotPassword" />
-        <activity android:name=".CreateAccount" />
-        <activity android:name=".StudentHomePage" />
-        <activity android:name=".Login">
+        <activity android:name=".activities.StudentProfile"/>
+        <activity android:name=".activities.AnnouncementBrowsing" />
+        <activity android:name=".activities.Login" />
+        <activity android:name=".activities.FillForm" />
+        <activity android:name=".activities.CreateRequest" />
+        <activity android:name=".activities.CreateBooking" />
+        <activity android:name=".activities.CreateQuery" />
+        <activity android:name=".activities.ForgotPassword" />
+        <activity android:name=".activities.CreateAccount" />
+        <activity android:name=".activities.StudentHomePage" />
+        <activity android:name=".activities.MainScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
