@@ -27,9 +27,15 @@ public class Utilities
     }
     //This method will validate all the edit texts
     public static boolean validate(EditText... editTexts){
+        EditText etQueryMessage = editTexts[0];
+
+        if(etQueryMessage.getText() == null || etQueryMessage.getText().toString().isEmpty())
+        {
+            etQueryMessage.setError("Please enter query message");
+            return false;
+        }
 
         return true;
-
     }
     //this method is for opening up a new sctivity
 

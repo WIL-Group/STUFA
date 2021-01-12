@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.stufa.R;
 import com.example.stufa.app_utilities.QueryAdapter;
+import com.example.stufa.app_utilities.Utilities;
 import com.example.stufa.data_models.Query;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
     private ArrayList<Query> queries;
     Query query;
     String type, message,qId;
-    DatabaseReference queryReff,submittedQueryReff,databaseReference;
+    DatabaseReference queryReff,submittedQueryReff;
     com.google.firebase.database.Query query1;
     private String date;
 
@@ -91,7 +92,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
             
             if(query != null)
             {
-                submittedQueryReff = FirebaseDatabase.getInstance().getReference().child("submitted_queries");
+                submittedQueryReff = Utilities.getDatabaseRefence().child("submitted_queries");
                 submittedQueryReff.push().setValue(query);
                 deleteData();
                 Toast.makeText(CreateQuery.this, "Query " + query.getqId() + " successfully submitted!", Toast.LENGTH_SHORT).show();
@@ -115,7 +116,8 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         {
             type = cbBookAllowance.getText().toString().trim();
 
-            if(etQueryMessage.getText().toString().isEmpty())
+
+            if(Utilities.validate(etQueryMessage))
             {
                 Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
             }
@@ -132,7 +134,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         {
             type = cbMealAllowance.getText().toString().trim();
 
-            if(etQueryMessage.getText().toString().isEmpty())
+            if(Utilities.validate(etQueryMessage))
             {
                 Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
             }
@@ -148,7 +150,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         else if(cbAccommodationOrTransportAllowance.isChecked())
         {
             type = cbAccommodationOrTransportAllowance.getText().toString().trim();
-            if(etQueryMessage.getText().toString().isEmpty())
+            if(Utilities.validate(etQueryMessage))
             {
                 Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
             }
@@ -194,7 +196,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
 
     private void readData(FireBaseCallBack fireBaseCallBack)
     {
-        queryReff = FirebaseDatabase.getInstance().getReference().child("saved_queries");
+        queryReff = Utilities.getDatabaseRefence().child("saved_queries");
 
         queryReff.addValueEventListener(new ValueEventListener() {
             @Override
