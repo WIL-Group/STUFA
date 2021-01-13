@@ -110,7 +110,7 @@ public class CreateBooking extends AppCompatActivity {
             {
                 booking = new Booking(studentNumber,bType,date);
 
-                bookingRef = FirebaseDatabase.getInstance().getReference().child("bookings");
+                bookingRef = Utilities.getDatabaseRefence().child("bookings");
                 bookingRef.push().setValue(booking);
 
                 Utilities.show(CreateBooking.this, "Booking submitted!");

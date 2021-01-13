@@ -148,8 +148,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         });
 
         rView.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentHomePage.this, AnnouncementBrowsing.class);
-            startActivity(intent);
+            Utilities.openActivity(StudentHomePage.this, AnnouncementBrowsing.class);
         });
 
 //        for(int i = 0; i < Utilities.DataCache.size(); i++)
@@ -166,32 +165,28 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         ivCreateQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentHomePage.this, CreateQuery.class);
-                startActivity(intent);
+                Utilities.openActivity(StudentHomePage.this, CreateQuery.class);
             }
         });
 
         ivCreateRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentHomePage.this, CreateRequest.class);
-                startActivity(intent);
+                Utilities.openActivity(StudentHomePage.this, CreateRequest.class);
             }
         });
 
         ivCreateBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
-                startActivity(intent);
+                Utilities.openActivity(StudentHomePage.this, CreateBooking.class);
             }
         });
 
         ivFillForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentHomePage.this, FillForm.class);
-                startActivity(intent);
+                Utilities.openActivity(StudentHomePage.this, FillForm.class);
             }
         });
 
@@ -244,47 +239,46 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         switch (item.getItemId()) {
             case R.id.nav_refresh_bookings:
 
-                Toast.makeText(this, "Refreshing bookings percentage...", Toast.LENGTH_SHORT).show();
-
+                Utilities.show(this, "Refreshing bookings percentage...");
                 break;
 
             case R.id.nav_announcements:
 
-                startActivity(new Intent(getApplicationContext(), AnnouncementBrowsing.class));
+                Utilities.openActivity(getApplicationContext(), AnnouncementBrowsing.class);
                 break;
 
             case R.id.nav_create_query:
 
-                startActivity(new Intent(getApplicationContext(), CreateQuery.class));
+                Utilities.openActivity(getApplicationContext(), CreateQuery.class);
                 break;
 
             case R.id.nav_create_request:
 
-                startActivity(new Intent(getApplicationContext(), CreateRequest.class));
+                Utilities.openActivity(getApplicationContext(), CreateRequest.class);
                 break;
 
             case R.id.nav_create_booking:
 
-                startActivity(new Intent(getApplicationContext(), CreateBooking.class));
+                Utilities.openActivity(getApplicationContext(), CreateBooking.class);
                 break;
 
             case R.id.nav_login:
 
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                Utilities.openActivity(getApplicationContext(), Login.class);
                 finish();
                 break;
 
             case R.id.nav_profile:
 
-                startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                Utilities.openActivity(getApplicationContext(), StudentProfile.class);
                 break;
 
             case R.id.nav_logout:
 
-                Toast.makeText(this, "Logging user out...", Toast.LENGTH_SHORT).show();
+                Utilities.show(this, "Logging user out...");
 
                 FirebaseAuth.getInstance().signOut();//used for logging out the user
-                startActivity(new Intent(getApplicationContext(), Login.class));
+                Utilities.openActivity(getApplicationContext(), Login.class);
                 finish();
                 break;
         }
