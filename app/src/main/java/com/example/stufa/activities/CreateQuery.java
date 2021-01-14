@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.stufa.R;
 import com.example.stufa.app_utilities.QueryAdapter;
+import com.example.stufa.app_utilities.Utilities;
 import com.example.stufa.data_models.Query;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -194,7 +195,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
 
     private void readData(FireBaseCallBack fireBaseCallBack)
     {
-        queryReff = FirebaseDatabase.getInstance().getReference().child("saved_queries");
+        queryReff = Utilities.getDatabaseRefence().child("saved_queries");
 
         queryReff.addValueEventListener(new ValueEventListener() {
             @Override

@@ -49,6 +49,7 @@
             android:id="@+id/btnViewFinancialStatement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="View Financial Statement" />
 
         <TextView
@@ -63,6 +64,7 @@
             android:id="@+id/btnRequestFinancialClearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="Request Financial Clearance" />
 
     </LinearLayout>

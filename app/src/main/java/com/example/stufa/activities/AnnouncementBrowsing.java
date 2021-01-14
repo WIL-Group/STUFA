@@ -5,8 +5,6 @@ import android.widget.ProgressBar;
 
 import com.example.stufa.R;
 import com.example.stufa.app_utilities.AnnouncementAdapter;
-import com.example.stufa.app_utilities.FirebaseCRUDHelper;
-import com.example.stufa.app_utilities.QueryAdapter;
 import com.example.stufa.app_utilities.Utilities;
 import com.example.stufa.data_models.Announcement;
 import com.google.firebase.database.DataSnapshot;
@@ -18,14 +16,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class AnnouncementBrowsing extends AppCompatActivity implements AnnouncementAdapter.ItemClickListener{
 
@@ -34,7 +28,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
     Announcement announcement;
     private RecyclerView rv;
     public ProgressBar mProgressBar;
-    private FirebaseCRUDHelper crudHelper=new FirebaseCRUDHelper();
+//    private FirebaseCRUDHelper crudHelper=new FirebaseCRUDHelper();
     private LinearLayoutManager layoutManager;
     String id;
     Boolean viewed = false;
