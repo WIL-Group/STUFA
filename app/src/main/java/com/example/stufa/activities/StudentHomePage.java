@@ -134,12 +134,14 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         rView.setLayoutManager(layoutManager);
 
         //use this for calculating the number/percentage of bookings
-        readData(list -> totalNumberOfBookings = list.size());
-        int number = (totalNumberOfBookings/10) * 100;
-        tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
-                (number).append("%").append
-                (" full capacity(for").append
-                (" accurate percentage, click the refresh option in the navigation panel on you right)").toString());
+        readData(list -> {
+            bookings = list;
+            tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
+                    (((bookings.size()/10.0) * 100)).append("%").append
+                    (" full capacity(for").append
+                    (" accurate percentage, click the refresh option in the navigation panel on you right)").toString());
+        });
+        //readData(list -> totalNumberOfBookings = list.size());
 
         readAnnouncements(list -> {
             announcements = list;
@@ -213,7 +215,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
             Toast.makeText(this, "Logging user out...", Toast.LENGTH_LONG).show();
 
             FirebaseAuth.getInstance().signOut();//used for logging out the user
-            startActivity(new Intent(getApplicationContext(), Login.class));
+            Utilities.openActivity(getApplicationContext(), Login.class);
             finish();
         }
 
