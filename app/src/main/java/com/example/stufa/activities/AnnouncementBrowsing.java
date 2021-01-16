@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AnnouncementBrowsing extends AppCompatActivity implements AnnouncementAdapter.ItemClickListener{
 
@@ -117,6 +118,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
                 {
                     announcement = ds.getValue(Announcement.class);
                     List.add(announcement);
+                    Collections.sort(List, Announcement.sort);
                 }
 
                 fireBaseCallBack.onCallBack(List);

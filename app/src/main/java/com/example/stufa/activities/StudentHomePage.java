@@ -39,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class StudentHomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,8 +48,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
     NavigationView nav_view;
     Toolbar my_toolbar;
 
-    Button btnAllowanceRelatedQuery, btnBooking, btnGeneralQuery,
-            btnFinancialStatement, btnFinancialClearance, btnFillForm;
     ImageView ivCreateQuery, ivCreateRequest, ivCreateBooking, ivFillForm;
     TextView tvGreeting, tvFullName, tvBookingPercentage;
     FirebaseAuth firebaseAuth;
@@ -81,9 +80,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         ivCreateRequest = findViewById(R.id.ivCeateRequest);
         ivFillForm = findViewById(R.id.ivFillForm);
         tvBookingPercentage = findViewById(R.id.tvBookingPercentage);
-//        tvStudentNumber = findViewById(R.id.tvStudentNumber);
-//        tvEmail = findViewById(R.id.tvEmail);
-//        tvCourse = findViewById(R.id.tvCourse);
 
         /*--------------------Fragment and Recycler list view----------------------*/
         fragmentManager = getSupportFragmentManager();
@@ -117,12 +113,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
                 assert value != null;
                 tvFullName.setText(String.format("%s%s%s", value.getString("name"), " ", value.getString("surname")));
-
-//                tvEmail.setText(String.format("%s%s",  "Email Address: ", value.getString("email")));
-//
-//                tvCourse.setText(String.format("%s%s",  "Campus: ", value.getString("campus")));
-//
-//                tvStudentNumber.setText(String.format("%s%s",  "Student Number: ", value.getString("studentNumber")));
             }
         });
         rView.setHasFixedSize(true);
@@ -150,47 +140,26 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         });
 
         rView.setOnClickListener(v -> {
-            Utilities.openActivity(StudentHomePage.this, AnnouncementBrowsing.class);
-        });
-
-//        for(int i = 0; i < Utilities.DataCache.size(); i++)
-//        {
-//            announcement = Utilities.DataCache.get(i);
-//            announcements.add(announcement);
-//        }
-
-//        adapter = new AnnouncementAdapter(StudentHomePage.this,announcements);
-//        rView.setAdapter(adapter);
+            Intent intent = new Intent(StudentHomePage.this, AnnouncementBrowsing.class);
+            startActivity(intent);        });
 
         readData(list -> totalNumberOfBookings = list.size());
 
-        ivCreateQuery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.openActivity(StudentHomePage.this, CreateQuery.class);
-            }
-        });
+        ivCreateQuery.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentHomePage.this, CreateQuery.class);
+            startActivity(intent);            });
 
-        ivCreateRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.openActivity(StudentHomePage.this, CreateRequest.class);
-            }
-        });
+        ivCreateRequest.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentHomePage.this, CreateRequest.class);
+            startActivity(intent);            });
 
-        ivCreateBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.openActivity(StudentHomePage.this, CreateBooking.class);
-            }
-        });
+        ivCreateBooking.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
+            startActivity(intent);            });
 
-        ivFillForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utilities.openActivity(StudentHomePage.this, FillForm.class);
-            }
-        });
+        ivFillForm.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentHomePage.this, FillForm.class);
+            startActivity(intent);            });
 
 
     }
@@ -215,7 +184,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
             Toast.makeText(this, "Logging user out...", Toast.LENGTH_LONG).show();
 
             FirebaseAuth.getInstance().signOut();//used for logging out the user
-            Utilities.openActivity(getApplicationContext(), Login.class);
+            startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         }
 
@@ -242,45 +211,58 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
             case R.id.nav_refresh_bookings:
 
                 Utilities.show(this, "Refreshing bookings percentage...");
+                //use this for calculating the number/percentage of bookings
+                readData(list -> {
+                    bookings = list;
+                    tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
+                            (((bookings.size()/10.0) * 100)).append("%").append
+                            (" full capacity(for").append
+                            (" accurate percentage, click the refresh option in the navigation panel on you right)").toString());
+                });
                 break;
 
             case R.id.nav_announcements:
 
-                Utilities.openActivity(getApplicationContext(), AnnouncementBrowsing.class);
+                startActivity(new Intent(getApplicationContext(), AnnouncementBrowsing.class));
                 break;
 
             case R.id.nav_create_query:
 
-                Utilities.openActivity(getApplicationContext(), CreateQuery.class);
+                startActivity(new Intent(getApplicationContext(), CreateQuery.class));
                 break;
 
             case R.id.nav_create_request:
 
-                Utilities.openActivity(getApplicationContext(), CreateRequest.class);
+                startActivity(new Intent(getApplicationContext(), CreateRequest.class));
                 break;
 
             case R.id.nav_create_booking:
 
-                Utilities.openActivity(getApplicationContext(), CreateBooking.class);
+                startActivity(new Intent(getApplicationContext(), CreateBooking.class));
+                break;
+
+            case R.id.nav_fill_form:
+
+                startActivity(new Intent(getApplicationContext(), FillForm.class));
                 break;
 
             case R.id.nav_login:
 
-                Utilities.openActivity(getApplicationContext(), Login.class);
+                startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
                 break;
 
             case R.id.nav_profile:
 
-                Utilities.openActivity(getApplicationContext(), StudentProfile.class);
+                startActivity(new Intent(getApplicationContext(), StudentProfile.class));
                 break;
 
             case R.id.nav_logout:
 
-                Utilities.show(this, "Logging user out...");
+                Toast.makeText(this, "Logging user out...", Toast.LENGTH_SHORT).show();
 
                 FirebaseAuth.getInstance().signOut();//used for logging out the user
-                Utilities.openActivity(getApplicationContext(), Login.class);
+                startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
                 break;
         }
@@ -289,13 +271,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
     }
 
-//    @Override
-//    public void onItemClick(int pos) {
-//
-//        Intent intent = new Intent(StudentHomePage.this, AnnouncementBrowsing.class);
-//        startActivity(intent);
-//
-//    }
 
     private void readData(FireBaseCallBack fireBaseCallBack) {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("bookings");
@@ -327,6 +302,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
                     announcement = ds.getValue(Announcement.class);
                     announcement.setMessage("");
                     List.add(announcement);
+                    Collections.sort(List, Announcement.sort);
                 }
 
                 fireCallBack.onFireCallback(List);

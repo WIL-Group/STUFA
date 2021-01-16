@@ -28,7 +28,7 @@ public class CreateRequest extends AppCompatActivity {
     Request request;
     String rID, rType;
     DatabaseReference requestReff;
-    com.google.firebase.database.Request request1;
+    //com.google.firebase.database.Request request1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +39,6 @@ public class CreateRequest extends AppCompatActivity {
         btnRequestFinancialClearance = findViewById(R.id.btnRequestFinancialClearance);
         btnCancel = findViewById(R.id.btnCancel);
         requestReff = Utilities.getDatabaseRefence().child("requests_table");
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle(getString(R.string.create_a_request));
-//        //actionBar.setIcon(R.drawable.person);
-//        actionBar.setDisplayUseLogoEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
-
 
     }
 
@@ -54,13 +48,15 @@ public class CreateRequest extends AppCompatActivity {
             case R.id.btnViewFinancialStatement:
                 request = new Request("Financial Statement");
                 requestReff.push().setValue(request);
-                Utilities.openActivity(CreateRequest.this, StudentHomePage.class);
+               // Utilities.openActivity(CreateRequest.this, StudentHomePage.class);
+                CreateRequest.this.finish();
                 Utilities.show(CreateRequest.this, getString(R.string.fs_sent));
                 break;
             case R.id.btnRequestFinancialClearance:
                 request = new Request("Financial Clearance");
                 requestReff.push().setValue(request);
-                Utilities.openActivity(CreateRequest.this, StudentHomePage.class);
+               // Utilities.openActivity(CreateRequest.this, StudentHomePage.class);
+                CreateRequest.this.finish();
                 Utilities.show(CreateRequest.this, getString(R.string.fc_sent));
                 break;
             case R.id.btnCancel:

@@ -2,6 +2,7 @@ package com.example.stufa.app_utilities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -53,7 +54,7 @@ public class Utilities
     public static void sendAnnouncementToActivity(Context c, Announcement announcement,
                                                Class clazz){
         Intent i=new Intent(c,clazz);
-        i.putExtra("ANNOUNCEMENT_KEY",announcement);
+        i.putExtra("ANNOUNCEMENT_KEY", (Parcelable) announcement);
         c.startActivity(i);
     }
 

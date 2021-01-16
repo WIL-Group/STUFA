@@ -3,9 +3,10 @@ package com.example.stufa.data_models;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Announcement implements Serializable
+public class Announcement implements Comparator<Announcement>
 {
     private  String aId;
     private String title;
@@ -74,4 +75,18 @@ public class Announcement implements Serializable
     public void setKey(String key) {
         this.key = key;
     }
+
+
+    public static Comparator<Announcement> sort = new Comparator<Announcement>() {
+        @Override
+        public int compare(Announcement o1, Announcement o2) {
+            return o2.getDate().compareTo(o1.getDate());
+        }
+    };
+
+    @Override
+    public int compare(Announcement o1, Announcement o2) {
+        return o2.getDate().compareTo(o1.getDate());
+    }
+
 }
