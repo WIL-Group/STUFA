@@ -218,7 +218,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         });
     }
 
-    private interface FireBaseCallBack
+    interface FireBaseCallBack
     {
         void onCallBack(ArrayList<Query> list);
     }

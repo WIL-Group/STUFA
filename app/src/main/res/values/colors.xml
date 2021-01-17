@@ -11,4 +11,5 @@
     <color name="dark_red">#980F0F</color>
     <color name="light_red">#420A0A</color>
     <color name="light_yellow">#F6EC28</color>
+    <color name="shady">#BFBDBD</color>
 </resources>
