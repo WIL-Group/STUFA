@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.ItemClicked*/ {
+public class StudentProfile extends AppCompatActivity implements QueryAdapter.ItemClicked {
 
     TextView tvStudentNumber, tvStudentNum, tvFullName, tvNameAndSurname, tvBookingType, tvDateCreated,
             tvDateRequested, tvRequestType, tvDateOfRequest, tvIsRequestAnswered;
@@ -61,8 +61,9 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
     private ArrayList<Query> queries;
     Query query;
     String type, message, qId;
-    DatabaseReference queryReff, submittedQueryReff, databaseReference;
+    DatabaseReference queryReff, bookingReff, databaseReference;
     com.google.firebase.database.Query query1;
+    private Booking booking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,9 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
         firestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
         form = new Form();
+        queries = new ArrayList<>();
+        booking = new Booking();
+
 
         userID = firebaseAuth.getCurrentUser().getUid();
         userRer = FirebaseDatabase.getInstance().getReference().child("users");
@@ -101,6 +105,15 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
 
         layoutManager = new LinearLayoutManager(StudentProfile.this);
         recyclerView.setLayoutManager(layoutManager);
+
+        readData(new FireBaseCallBack() {
+            @Override
+            public void onCallBack(ArrayList<Query> list) {
+                myAdapter = new QueryAdapter(list, StudentProfile.this);
+                recyclerView.setAdapter(myAdapter);
+            }
+        });
+
 
 
         //Reads the data entered when the user registered just to check if we can read back the data
@@ -126,15 +139,13 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
                 etCourse.setText(course);
 
                 /*-----------------For the booking details tab----------------*/
-                bType = value.getString("bType");
-                date = value.getString("date");
 
-                tvNameAndSurname.setText(String.format("%s %s", name, surname));
-                tvBookingType.setText(bType);
-                tvDateCreated.setText(date);
-                tvStudentNum.setText(studentNumber);
+
+
             }
         });
+
+
 
 
 
@@ -154,6 +165,19 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
 
         btnEditRequest.setOnClickListener(v -> {
 
+        });
+
+        retrieveBooking(new FireCallBack() {
+            @Override
+            public void onFire(Booking booking) {
+                bType = booking.getbType();
+                date = booking.getDate();
+
+                tvNameAndSurname.setText(String.format("%s %s", name, surname));
+                tvBookingType.setText(bType);
+                tvDateCreated.setText(date);
+                tvStudentNum.setText(studentNumber);
+            }
         });
 
     }
@@ -203,6 +227,66 @@ public class StudentProfile extends AppCompatActivity /*implements QueryAdapter.
             }
         });
 
+    }
+
+    private void retrieveBooking(FireCallBack fireCallBack)
+    {
+        bookingReff = Utilities.getDatabaseRefence().child("bookings"+studentNumber);
+
+        bookingReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                booking = snapshot.getValue(Booking.class);
+                fireCallBack.onFire(booking);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(StudentProfile.this, "Error!" + error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void readData(FireBaseCallBack fireBaseCallBack)
+    {
+        queryReff = Utilities.getDatabaseRefence().child("submitted_queries");
+
+        queryReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                queries.clear();
+
+                for(DataSnapshot ds : snapshot.getChildren())
+                {
+                    query = ds.getValue(Query.class);
+                    queries.add(query);
+                }
+                fireBaseCallBack.onCallBack(queries);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(StudentProfile.this, "Error!" + error, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    @Override
+    public void onItemClicked(int index) {
+
+    }
+
+    interface  FireCallBack
+    {
+        void onFire(Booking booking);
+    }
+
+    interface FireBaseCallBack
+    {
+        void onCallBack(ArrayList<Query> list);
     }
 
 //    public void readBooking()
