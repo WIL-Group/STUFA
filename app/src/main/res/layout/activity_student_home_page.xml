@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.StudentHomePage"
+    android:background="@drawable/new_gradient_background"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -21,9 +22,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/main_menu"/>
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,23 +43,38 @@
             <LinearLayout
                 android:id="@+id/greeting_layout"
                 style="@style/greeting"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/my_toolbar">
 
                 <TextView
                     android:id="@+id/tvGreeting"
-                    style="@style/tv_greeting" />
+                    style="@style/tv_greeting"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="55dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/amaranth"
+                    android:foregroundGravity="left"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/tvFullName"
-                    style="@style/tv_fullname" />
+                    style="@style/tv_fullname"
+                    android:layout_marginStart="-90dp"
+                    android:layout_marginEnd="48dp"
+                    android:fontFamily="@font/berkshire_swash"
+                    android:foregroundGravity="left"
+                    android:textSize="30sp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView2"
                 style="@style/tv_assistance"
+                android:fontFamily="@font/amaranth"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/greeting_layout" />
@@ -67,12 +83,13 @@
                 android:id="@+id/tvBookingPercentage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center_horizontal"
-                android:text="Bookings are at 78% full capacity(for accurate percentage, click the refresh tab above on the tab)"
-                android:textColor="@android:color/holo_red_dark"
+                android:text="Bookings are at 78% full capacity"
+                android:textColor="@android:color/holo_orange_light"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,6 +128,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvAnnounce"
+                        android:background="@drawable/buttons"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -277,7 +295,6 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    </ScrollView>-->
+    </ScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

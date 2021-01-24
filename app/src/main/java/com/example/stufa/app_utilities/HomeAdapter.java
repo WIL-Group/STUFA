@@ -41,19 +41,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         holder.itemView.setTag(List.get(i));
+        holder.itemView.setBackgroundColor(R.drawable.buttons);
         holder.itemTvTitle.setText(List.get(i).getTitle());
-        holder.itemTvName.setText("Thabo");
+        holder.itemTvName.setText(List.get(i).getStaffName());
         if (List.get(i).isViewed())
         {
+            holder.itemView.setBackgroundColor(R.drawable.buttons);
             holder.itemIvView.setImageResource(R.drawable.viewed);
             holder.itemCardView.setBackgroundColor(R.color.white);
 
         }
         else
         {
+            holder.itemView.setBackgroundColor(R.drawable.buttons);
             holder.itemIvView.setImageResource(R.drawable.not_viewed);
             holder.itemCardView.setBackgroundColor(R.color.light_yellow);
-
         }
         holder.itemMessage.setText(List.get(i).getMessage());
         holder.itemTvDate.setText(String.format("%s", List.get(i).getDate()));

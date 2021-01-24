@@ -66,6 +66,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_student_home_page);
 
         /*------------------Hooks--------------------------------------*/
@@ -126,10 +127,15 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         //use this for calculating the number/percentage of bookings
         readData(list -> {
             bookings = list;
-            tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
-                    (((bookings.size()/10.0) * 100)).append("%").append
-                    (" full capacity(for").append
-                    (" accurate percentage, click the refresh option in the navigation panel on you right)").toString());
+            if(bookings.size() == 10.0)
+            {
+                tvBookingPercentage.setText(new StringBuilder().append("Bookings are at full capacity," +
+                        " Please be patient and wait for a spot to be open to book"));
+            }
+                tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
+                        (((bookings.size()/10.0) * 100)).append("%").append
+                        (" full capacity").toString());
+
         });
         //readData(list -> totalNumberOfBookings = list.size());
 
@@ -160,7 +166,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         ivFillForm.setOnClickListener(v -> {
             Intent intent = new Intent(StudentHomePage.this, FillForm.class);
             startActivity(intent);            });
-
 
     }
 
@@ -208,18 +213,6 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.nav_refresh_bookings:
-
-                Utilities.show(this, "Refreshing bookings percentage...");
-                //use this for calculating the number/percentage of bookings
-                readData(list -> {
-                    bookings = list;
-                    tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
-                            (((bookings.size()/10.0) * 100)).append("%").append
-                            (" full capacity(for").append
-                            (" accurate percentage, click the refresh option in the navigation panel on you right)").toString());
-                });
-                break;
 
             case R.id.nav_announcements:
 
@@ -273,7 +266,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
 
     private void readData(FireBaseCallBack fireBaseCallBack) {
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("bookings");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Bookings");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -302,7 +295,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
                     announcement = ds.getValue(Announcement.class);
                     announcement.setMessage("");
                     List.add(announcement);
-                    Collections.sort(List, Announcement.sort);
+                    //Collections.sort(List, Announcement.sort);
                 }
 
                 fireCallBack.onFireCallback(List);

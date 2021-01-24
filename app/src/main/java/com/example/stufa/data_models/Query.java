@@ -2,31 +2,28 @@ package com.example.stufa.data_models;
 
 public class Query {
 
-    String type;
-    String message;
     String qId;
+    boolean isAnswered;
+    String staffEmail;
+    String queryMessage;
+    String queryType;
+    String date;
+    String studNum;
+    String queryResponseMessage;
 
-    public Query(String type, String message, String qid) {
-        this.type = type;
-        this.message = message;
-        this.qId = qid;
-
+    public Query() {
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public Query(String qId, boolean isAnswered, String staffEmail, String queryMessage, String queryType,
+                 String date, String studNum, String queryResponseMessage) {
+        this.qId = qId;
+        this.isAnswered = isAnswered;
+        this.staffEmail = staffEmail;
+        this.queryMessage = queryMessage;
+        this.queryType = queryType;
+        this.date = date;
+        this.studNum = studNum;
+        this.queryResponseMessage = queryResponseMessage;
     }
 
     public String getqId() {
@@ -37,6 +34,59 @@ public class Query {
         this.qId = qId;
     }
 
-    public Query() {
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        isAnswered = answered;
+    }
+
+    public String getStaffEmail() {
+        return staffEmail;
+    }
+
+    public void setStaffEmail(String staffEmail) {
+        this.staffEmail = staffEmail;
+    }
+
+    public String getQueryMessage() {
+        return queryMessage;
+    }
+
+    public void setQueryMessage(String queryMessage) {
+        this.queryMessage = queryMessage;
+    }
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStudNum() {
+        return studNum;
+    }
+
+    public void setStudNum(String studNum) {
+        this.studNum = studNum;
+    }
+
+    public String getQueryResponseMessage() {
+        return queryResponseMessage;
+    }
+
+    public void setQueryResponseMessage(String queryResponseMessage) {
+        this.queryResponseMessage = queryResponseMessage;
     }
 }

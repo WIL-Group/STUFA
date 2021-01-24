@@ -57,29 +57,19 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         //get the current announcement
         holder.itemView.setTag(announcements.get(i));
         holder.itemTvTitle.setText(announcements.get(i).getTitle());
-        holder.itemTvName.setText("Thabo");
+        holder.itemTvName.setText(announcements.get(i).getStaffName());
         if (announcements.get(i).isViewed())
         {
             holder.itemIvView.setImageResource(R.drawable.viewed);
             holder.itemCardView.setBackgroundColor(R.color.white);
-           /* holder.itemIvView.setBackgroundColor(R.color.white);
-            holder.itemMessage.setBackgroundColor(R.color.white);
-            holder.itemTvName.setBackgroundColor(R.color.white);
-            holder.itemTvDate.setBackgroundColor(R.color.white);
-            holder.itemTvTitle.setBackgroundColor(R.color.white);*/
         }
         else
         {
             holder.itemIvView.setImageResource(R.drawable.not_viewed);
             holder.itemCardView.setBackgroundColor(R.color.light_yellow);
-           /* holder.itemIvView.setBackgroundColor(R.color.light_yellow);
-            holder.itemMessage.setBackgroundColor(R.color.light_yellow);
-            holder.itemTvName.setBackgroundColor(R.color.light_yellow);
-            holder.itemTvDate.setBackgroundColor(R.color.light_yellow);
-            holder.itemTvTitle.setBackgroundColor(R.color.light_yellow);*/
         }
         holder.itemMessage.setText(announcements.get(i).getMessage());
-        holder.itemTvDate.setText(String.format("%s", announcements.get(i).getDate()));
+        holder.itemTvDate.setText(String.format("%s", announcements.get(i).getDate().toString()));
 
     }
 

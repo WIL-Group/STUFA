@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/authentications_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient4"
     tools:context=".activities.CreateAccount">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentLayout"
         style="@style/content_layout">
 
         <ImageView
             android:id="@+id/imLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:transitionName="logo_image"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/assistance_logo"/>
+            android:src="@drawable/assistance_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tvCreateAccount"
@@ -27,11 +33,17 @@
             android:text="Create Account"
             android:textSize="25sp"
             android:fontFamily="@font/berkshire_swash"
-            android:textColor="@android:color/holo_orange_light"/>
+            android:textColor="@android:color/holo_orange_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imLogo"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFirstName"
-            style="@style/til_firstname_style">
+            style="@style/til_firstname_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCreateAccount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
@@ -41,7 +53,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilLastName"
-            style="@style/til_lastname_style">
+            style="@style/til_lastname_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilFirstName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etSurname"
@@ -51,7 +66,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUserName"
-            style="@style/til_username_style">
+            style="@style/til_username_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLastName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -62,16 +80,25 @@
         <TextView
             android:id="@+id/textView3"
             style="@style/tv_select_your_campus"
-            android:transitionName="tv_select_campus_trans"/>
+            android:transitionName="tv_select_campus_trans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilUserName"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchPos"
             style="@style/switchPos"
-            android:transitionName="sw_campus_name_trans"/>
+            android:transitionName="sw_campus_name_trans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilStudentNumber"
-            style="@style/til_student_number_style">
+            style="@style/til_student_number_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchPos">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etStudentNumber"
@@ -81,7 +108,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEnterPassword"
-            style="@style/til_enter_password_style">
+            style="@style/til_enter_password_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilStudentNumber">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -91,7 +121,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilConfirmPassword"
-            style="@style/til_confirm_password_style">
+            style="@style/til_confirm_password_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilEnterPassword">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfirmPassword"
@@ -102,27 +135,40 @@
         <Button
             android:id="@+id/btnSignUp"
             style="@style/button_create_account"
-            android:transitionName="btn_sign_up_trans"/>
+            android:transitionName="btn_sign_up_trans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilConfirmPassword"/>
 
         <TextView
             android:id="@+id/tvLogin"
             style="@style/tv_already_have_an_account"
-            android:transitionName="tv_already_have_account_trans"/>
+            android:transitionName="tv_already_have_account_trans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignUp"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/progressBarLayout"
+            style="@style/progress_bar_layout"
+            android:layout_marginStart="10dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/tilStudentNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/progressBarLayout"
-        style="@style/progress_bar_layout">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="150dp" />
+        </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center_horizontal"
-        />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+
+
+</ScrollView>
