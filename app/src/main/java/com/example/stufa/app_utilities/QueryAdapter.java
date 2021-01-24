@@ -41,8 +41,8 @@ public class QueryAdapter extends RecyclerView.Adapter<QueryAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.itemView.setTag(queries.get(position));
-        holder.tvType.setText(queries.get(position).getType());
-        holder.tvMessage.setText(queries.get(position).getMessage());
+        holder.tvType.setText(queries.get(position).getQueryType());
+        holder.tvMessage.setText(queries.get(position).getQueryMessage());
         if (selectedPosition == position) {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffbb33"));
         } else {

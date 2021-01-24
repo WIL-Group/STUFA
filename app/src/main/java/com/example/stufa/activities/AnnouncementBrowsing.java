@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class AnnouncementBrowsing extends AppCompatActivity implements AnnouncementAdapter.ItemClickListener{
 
@@ -29,13 +30,13 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
     Announcement announcement;
     private RecyclerView rv;
     public ProgressBar mProgressBar;
-//    private FirebaseCRUDHelper crudHelper=new FirebaseCRUDHelper();
+//  private FirebaseCRUDHelper crudHelper=new FirebaseCRUDHelper();
     private LinearLayoutManager layoutManager;
     String id;
     Boolean viewed = false;
     DatabaseReference announcementRef;
     Query query;
-    private String date;
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +58,17 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
             adapter = new AnnouncementAdapter(AnnouncementBrowsing.this,announcements);
             rv.setAdapter(adapter);
         });
-        /*date = new SimpleDateFormat("dd MM, yyyy", Locale.getDefault()).format(new Date());
-
-        announcement = new Announcement(id,"Ditaba","Corona closes schools",date,viewed);
-
-        announcementRef.push().setValue(announcement);
-        for(int i = 0; i < announcements.size(); i++)
-        {
-            id = i + announcement.getMessage().charAt(2)+ "";
-            announcement = announcements.get(i);
-            announcement.setaId(id);
-        }*/
+//        date = new SimpleDateFormat("dd MM, yyyy", Locale.getDefault()).format(new Date());
+//
+//        announcement = new Announcement(id,"Ditaba","Corona closes schools",date,viewed);
+//
+//        announcementRef.push().setValue(announcement);
+//        for(int i = 0; i < announcements.size(); i++)
+//        {
+//            id = i + announcement.getMessage().charAt(2)+ "";
+//            announcement = announcements.get(i);
+//            announcement.setaId(id);
+//        }
     }
 
     @Override
@@ -87,7 +88,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
 
     private void update()
     {
-        String toUpdate = announcement.getaId();
+        String toUpdate = announcement.getId();
 
         query = announcementRef.orderByChild("aId").equalTo(toUpdate);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,7 +110,6 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
     private void readData(FireBaseCallBack fireBaseCallBack)
     {
 
-
         announcementRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -118,7 +118,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
                 {
                     announcement = ds.getValue(Announcement.class);
                     List.add(announcement);
-                    Collections.sort(List, Announcement.sort);
+                    //Collections.sort(List, Announcement.sort);
                 }
 
                 fireBaseCallBack.onCallBack(List);

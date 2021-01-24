@@ -3,10 +3,10 @@
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/nav_refresh_bookings"
-            android:icon="@drawable/refresh"
-            android:title="Refresh Bookings" />
+<!--        <item-->
+<!--            android:id="@+id/nav_refresh_bookings"-->
+<!--            android:icon="@drawable/refresh"-->
+<!--            android:title="Refresh Bookings" />-->
 
         <item
             android:id="@+id/nav_announcements"

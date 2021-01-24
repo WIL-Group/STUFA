@@ -2,17 +2,17 @@ package com.example.stufa.data_models;
 
 public class Form
 {
-    String  name,
-            surname,
-            idNumber,
-            studentNumber,
-            applicationRefNumber,
-            instNumber,
-            courseOrProgramme,
-            yearOfStudy,
-            lastYearOfFunding,
-            currentFundingStatus,
-            dateOfAppeal;
+    String  Name,
+            Surname,
+            IDNumber,
+            StudentNumber,
+            AppRef,
+            InstName,
+            Course,
+            YearOfStudy,
+            LastYearOfStudy,
+            FundingStatus,
+            DateOfAppeal;
 
     Boolean newAppeal, returningStudent, failureToMeetAcademicPerformanceRequirements,
             changeInFinancialCircumstances, lossOfBursarySponsor,
@@ -22,27 +22,24 @@ public class Form
     public Form() {
     }
 
-    public Form(String name, String surname, String idNumber, String studentNumber,
-                String applicationRefNumber, String instNumber, String courseOrProgramme,
-                String yearOfStudy, String lastYearOfFunding, String currentFundingStatus,
-                String dateOfAppeal, Boolean newAppeal, Boolean returningStudent,
-                Boolean failureToMeetAcademicPerformanceRequirements,
-                Boolean changeInFinancialCircumstances,
-                Boolean lossOfBursarySponsor,
-                Boolean incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding,
+    public Form(String name, String surname, String IDNumber, String studentNumber, String appRef,
+                String instName, String course, String yearOfStudy, String lastYearOfStudy,
+                String fundingStatus, String dateOfAppeal, Boolean newAppeal, Boolean returningStudent,
+                Boolean failureToMeetAcademicPerformanceRequirements, Boolean changeInFinancialCircumstances,
+                Boolean lossOfBursarySponsor, Boolean incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding,
                 Boolean iCompletedAGapYearDueToAcademicPerformance, Boolean fullNameDeclaration)
     {
-        this.name = name;
-        this.surname = surname;
-        this.idNumber = idNumber;
-        this.studentNumber = studentNumber;
-        this.applicationRefNumber = applicationRefNumber;
-        this.instNumber = instNumber;
-        this.courseOrProgramme = courseOrProgramme;
-        this.yearOfStudy = yearOfStudy;
-        this.lastYearOfFunding = lastYearOfFunding;
-        this.currentFundingStatus = currentFundingStatus;
-        this.dateOfAppeal = dateOfAppeal;
+        Name = name;
+        Surname = surname;
+        this.IDNumber = IDNumber;
+        StudentNumber = studentNumber;
+        AppRef = appRef;
+        InstName = instName;
+        Course = course;
+        YearOfStudy = yearOfStudy;
+        LastYearOfStudy = lastYearOfStudy;
+        FundingStatus = fundingStatus;
+        DateOfAppeal = dateOfAppeal;
         this.newAppeal = newAppeal;
         this.returningStudent = returningStudent;
         this.failureToMeetAcademicPerformanceRequirements = failureToMeetAcademicPerformanceRequirements;
@@ -54,91 +51,91 @@ public class Form
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getSurname() {
-        return surname;
+        return Surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        Surname = surname;
     }
 
-    public String getIdNumber() {
-        return idNumber;
+    public String getIDNumber() {
+        return IDNumber;
     }
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
+    public void setIDNumber(String IDNumber) {
+        this.IDNumber = IDNumber;
     }
 
     public String getStudentNumber() {
-        return studentNumber;
+        return StudentNumber;
     }
 
     public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
+        StudentNumber = studentNumber;
     }
 
-    public String getApplicationRefNumber() {
-        return applicationRefNumber;
+    public String getAppRef() {
+        return AppRef;
     }
 
-    public void setApplicationRefNumber(String applicationRefNumber) {
-        this.applicationRefNumber = applicationRefNumber;
+    public void setAppRef(String appRef) {
+        AppRef = appRef;
     }
 
-    public String getInstNumber() {
-        return instNumber;
+    public String getInstName() {
+        return InstName;
     }
 
-    public void setInstNumber(String instNumber) {
-        this.instNumber = instNumber;
+    public void setInstName(String instName) {
+        InstName = instName;
     }
 
-    public String getCourseOrProgramme() {
-        return courseOrProgramme;
+    public String getCourse() {
+        return Course;
     }
 
-    public void setCourseOrProgramme(String courseOrProgramme) {
-        this.courseOrProgramme = courseOrProgramme;
+    public void setCourse(String course) {
+        Course = course;
     }
 
     public String getYearOfStudy() {
-        return yearOfStudy;
+        return YearOfStudy;
     }
 
     public void setYearOfStudy(String yearOfStudy) {
-        this.yearOfStudy = yearOfStudy;
+        YearOfStudy = yearOfStudy;
     }
 
-    public String getLastYearOfFunding() {
-        return lastYearOfFunding;
+    public String getLastYearOfStudy() {
+        return LastYearOfStudy;
     }
 
-    public void setLastYearOfFunding(String lastYearOfFunding) {
-        this.lastYearOfFunding = lastYearOfFunding;
+    public void setLastYearOfStudy(String lastYearOfStudy) {
+        LastYearOfStudy = lastYearOfStudy;
     }
 
-    public String getCurrentFundingStatus() {
-        return currentFundingStatus;
+    public String getFundingStatus() {
+        return FundingStatus;
     }
 
-    public void setCurrentFundingStatus(String currentFundingStatus) {
-        this.currentFundingStatus = currentFundingStatus;
+    public void setFundingStatus(String fundingStatus) {
+        FundingStatus = fundingStatus;
     }
 
     public String getDateOfAppeal() {
-        return dateOfAppeal;
+        return DateOfAppeal;
     }
 
     public void setDateOfAppeal(String dateOfAppeal) {
-        this.dateOfAppeal = dateOfAppeal;
+        DateOfAppeal = dateOfAppeal;
     }
 
     public Boolean getNewAppeal() {

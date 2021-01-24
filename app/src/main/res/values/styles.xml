@@ -68,7 +68,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textEmailAddress</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="til_enter_your_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -87,7 +89,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="button_login">
@@ -146,7 +150,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPersonName</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="til_lastname_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -166,7 +172,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPersonName</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="til_username_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -187,7 +195,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textEmailAddress</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="tv_select_your_campus">
@@ -236,9 +246,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">number</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
         <item name="counterEnabled">true</item>
         <item name="counterMaxLength">@dimen/counter_max</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="til_enter_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -259,7 +271,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="til_confirm_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -280,7 +294,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">textPassword</item>
-        <item name="android:background">#70FFFFFF</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="button_create_account">
@@ -303,7 +319,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/already_have_an_account</item>
         <item name="android:textSize">@dimen/campus_name_text_size</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/holo_orange_light</item>
     </style>
 
     <style name="iwResetPassword">
@@ -360,7 +376,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">@dimen/greeting_weight</item>
-        <item name="android:layout_marginStart">@dimen/login_button_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/margin_top</item>
+        <item name="android:layout_marginEnd">@dimen/margin_top</item>
         <item name="android:textColor">@color/navy_blue</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/hello</item>
