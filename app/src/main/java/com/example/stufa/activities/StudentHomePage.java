@@ -63,6 +63,8 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
     HomeAdapter adapter;
     Booking booking;
 
+    double totalBookings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,13 +129,14 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         //use this for calculating the number/percentage of bookings
         readData(list -> {
             bookings = list;
+            totalBookings = (bookings.size()/10.0) * 100;
             if(bookings.size() == 10.0)
             {
                 tvBookingPercentage.setText(new StringBuilder().append("Bookings are at full capacity," +
                         " Please be patient and wait for a spot to be open to book"));
             }
                 tvBookingPercentage.setText(new StringBuilder().append("Bookings are at ").append
-                        (((bookings.size()/10.0) * 100)).append("%").append
+                        (totalBookings).append("%").append
                         (" full capacity").toString());
 
         });
@@ -156,12 +159,21 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
             startActivity(intent);            });
 
         ivCreateRequest.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentHomePage.this, CreateRequest.class);
-            startActivity(intent);            });
+                Intent intent = new Intent(StudentHomePage.this, CreateRequest.class);
+                startActivity(intent);          });
 
         ivCreateBooking.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
-            startActivity(intent);            });
+            if (totalBookings < 100.0)
+            {
+                Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
+                startActivity(intent);
+            }
+            else
+            {
+                Utilities.show(this, "Bookings are at full capacity," + "\n" +
+                        "Please be patient and wait for a spot to be open to book");
+            }
+                        });
 
         ivFillForm.setOnClickListener(v -> {
             Intent intent = new Intent(StudentHomePage.this, FillForm.class);
