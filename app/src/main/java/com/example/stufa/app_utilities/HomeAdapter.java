@@ -2,6 +2,7 @@ package com.example.stufa.app_utilities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,21 +45,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.itemView.setBackgroundColor(R.drawable.buttons);
         holder.itemTvTitle.setText(List.get(i).getTitle());
         holder.itemTvName.setText(List.get(i).getStaffName());
+        holder.itemCardView.setCardBackgroundColor(Color.WHITE);
         if (List.get(i).isViewed())
         {
-            holder.itemView.setBackgroundColor(R.drawable.buttons);
             holder.itemIvView.setImageResource(R.drawable.viewed);
             holder.itemCardView.setBackgroundColor(R.color.white);
 
         }
         else
         {
-            holder.itemView.setBackgroundColor(R.drawable.buttons);
             holder.itemIvView.setImageResource(R.drawable.not_viewed);
             holder.itemCardView.setBackgroundColor(R.color.light_yellow);
         }
         holder.itemMessage.setText(List.get(i).getMessage());
-        holder.itemTvDate.setText(String.format("%s", List.get(i).getDate()));
+        holder.itemTvDate.setText(List.get(i).getDate());
     }
 
 
@@ -85,6 +85,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             itemTvDate = (TextView)itemView.findViewById(R.id.tvDate);
             itemMessage = (TextView)itemView.findViewById(R.id.tvAnnounceMessage);
             itemCardView = (CardView)itemView.findViewById(R.id.cvAnnounceRow);
+
+            itemCardView.setCardBackgroundColor(Color.WHITE);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

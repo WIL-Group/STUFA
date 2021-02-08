@@ -2,148 +2,161 @@ package com.example.stufa.data_models;
 
 public class Form
 {
-    String  Name,
-            Surname,
-            IDNumber,
-            StudentNumber,
-            AppRef,
-            InstName,
-            Course,
-            YearOfStudy,
-            LastYearOfStudy,
-            FundingStatus,
-            DateOfAppeal;
+    String  id,
+            name,
+            surname,
+            idNumber,
+            studentNumber,
+            appRef,
+            instName,
+            course,
+            yearOfStudy,
+            lastYearOfStudy,
+            fundingStatus,
+            dateOfAppeal;
 
-    Boolean newAppeal, returningStudent, failureToMeetAcademicPerformanceRequirements,
-            changeInFinancialCircumstances, lossOfBursarySponsor,
-            incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding,
-            iCompletedAGapYearDueToAcademicPerformance, fullNameDeclaration;
+    Boolean newApplicant,
+            returningStudent,
+            failureToMeet,
+            changeInFinancialCircumstances,
+            lossOfBursarySponsor,
+            incorrectAcademicResults,
+            gapYear,
+            fullNameDeclaration;
 
     public Form() {
     }
 
-    public Form(String name, String surname, String IDNumber, String studentNumber, String appRef,
-                String instName, String course, String yearOfStudy, String lastYearOfStudy,
-                String fundingStatus, String dateOfAppeal, Boolean newAppeal, Boolean returningStudent,
-                Boolean failureToMeetAcademicPerformanceRequirements, Boolean changeInFinancialCircumstances,
-                Boolean lossOfBursarySponsor, Boolean incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding,
-                Boolean iCompletedAGapYearDueToAcademicPerformance, Boolean fullNameDeclaration)
-    {
-        Name = name;
-        Surname = surname;
-        this.IDNumber = IDNumber;
-        StudentNumber = studentNumber;
-        AppRef = appRef;
-        InstName = instName;
-        Course = course;
-        YearOfStudy = yearOfStudy;
-        LastYearOfStudy = lastYearOfStudy;
-        FundingStatus = fundingStatus;
-        DateOfAppeal = dateOfAppeal;
-        this.newAppeal = newAppeal;
+    public Form(String id, String name, String surname, String idNumber, String studentNumber,
+                String appRef, String instName, String course, String yearOfStudy,
+                String lastYearOfStudy, String fundingStatus, String dateOfAppeal,
+                Boolean newApplicant, Boolean returningStudent, Boolean failureToMeet,
+                Boolean changeInFinancialCircumstances, Boolean lossOfBursarySponsor,
+                Boolean incorrectAcademicResults, Boolean gapYear, Boolean fullNameDeclaration) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.idNumber = idNumber;
+        this.studentNumber = studentNumber;
+        this.appRef = appRef;
+        this.instName = instName;
+        this.course = course;
+        this.yearOfStudy = yearOfStudy;
+        this.lastYearOfStudy = lastYearOfStudy;
+        this.fundingStatus = fundingStatus;
+        this.dateOfAppeal = dateOfAppeal;
+        this.newApplicant = newApplicant;
         this.returningStudent = returningStudent;
-        this.failureToMeetAcademicPerformanceRequirements = failureToMeetAcademicPerformanceRequirements;
+        this.failureToMeet = failureToMeet;
         this.changeInFinancialCircumstances = changeInFinancialCircumstances;
         this.lossOfBursarySponsor = lossOfBursarySponsor;
-        this.incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding = incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding;
-        this.iCompletedAGapYearDueToAcademicPerformance = iCompletedAGapYearDueToAcademicPerformance;
+        this.incorrectAcademicResults = incorrectAcademicResults;
+        this.gapYear = gapYear;
         this.fullNameDeclaration = fullNameDeclaration;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getSurname() {
-        return Surname;
+        return surname;
     }
 
     public void setSurname(String surname) {
-        Surname = surname;
+        this.surname = surname;
     }
 
-    public String getIDNumber() {
-        return IDNumber;
+    public String getIdNumber() {
+        return idNumber;
     }
 
-    public void setIDNumber(String IDNumber) {
-        this.IDNumber = IDNumber;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     public String getStudentNumber() {
-        return StudentNumber;
+        return studentNumber;
     }
 
     public void setStudentNumber(String studentNumber) {
-        StudentNumber = studentNumber;
+        this.studentNumber = studentNumber;
     }
 
     public String getAppRef() {
-        return AppRef;
+        return appRef;
     }
 
     public void setAppRef(String appRef) {
-        AppRef = appRef;
+        this.appRef = appRef;
     }
 
     public String getInstName() {
-        return InstName;
+        return instName;
     }
 
     public void setInstName(String instName) {
-        InstName = instName;
+        this.instName = instName;
     }
 
     public String getCourse() {
-        return Course;
+        return course;
     }
 
     public void setCourse(String course) {
-        Course = course;
+        this.course = course;
     }
 
     public String getYearOfStudy() {
-        return YearOfStudy;
+        return yearOfStudy;
     }
 
     public void setYearOfStudy(String yearOfStudy) {
-        YearOfStudy = yearOfStudy;
+        this.yearOfStudy = yearOfStudy;
     }
 
     public String getLastYearOfStudy() {
-        return LastYearOfStudy;
+        return lastYearOfStudy;
     }
 
     public void setLastYearOfStudy(String lastYearOfStudy) {
-        LastYearOfStudy = lastYearOfStudy;
+        this.lastYearOfStudy = lastYearOfStudy;
     }
 
     public String getFundingStatus() {
-        return FundingStatus;
+        return fundingStatus;
     }
 
     public void setFundingStatus(String fundingStatus) {
-        FundingStatus = fundingStatus;
+        this.fundingStatus = fundingStatus;
     }
 
     public String getDateOfAppeal() {
-        return DateOfAppeal;
+        return dateOfAppeal;
     }
 
     public void setDateOfAppeal(String dateOfAppeal) {
-        DateOfAppeal = dateOfAppeal;
+        this.dateOfAppeal = dateOfAppeal;
     }
 
-    public Boolean getNewAppeal() {
-        return newAppeal;
+    public Boolean getNewApplicant() {
+        return newApplicant;
     }
 
-    public void setNewAppeal(Boolean newAppeal) {
-        this.newAppeal = newAppeal;
+    public void setNewApplicant(Boolean newApplicant) {
+        this.newApplicant = newApplicant;
     }
 
     public Boolean getReturningStudent() {
@@ -154,12 +167,12 @@ public class Form
         this.returningStudent = returningStudent;
     }
 
-    public Boolean getFailureToMeetAcademicPerformanceRequirements() {
-        return failureToMeetAcademicPerformanceRequirements;
+    public Boolean getFailureToMeet() {
+        return failureToMeet;
     }
 
-    public void setFailureToMeetAcademicPerformanceRequirements(Boolean failureToMeetAcademicPerformanceRequirements) {
-        this.failureToMeetAcademicPerformanceRequirements = failureToMeetAcademicPerformanceRequirements;
+    public void setFailureToMeet(Boolean failureToMeet) {
+        this.failureToMeet = failureToMeet;
     }
 
     public Boolean getChangeInFinancialCircumstances() {
@@ -178,20 +191,20 @@ public class Form
         this.lossOfBursarySponsor = lossOfBursarySponsor;
     }
 
-    public Boolean getIncorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding() {
-        return incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding;
+    public Boolean getIncorrectAcademicResults() {
+        return incorrectAcademicResults;
     }
 
-    public void setIncorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding(Boolean incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding) {
-        this.incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding = incorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding;
+    public void setIncorrectAcademicResults(Boolean incorrectAcademicResults) {
+        this.incorrectAcademicResults = incorrectAcademicResults;
     }
 
-    public Boolean getiCompletedAGapYearDueToAcademicPerformance() {
-        return iCompletedAGapYearDueToAcademicPerformance;
+    public Boolean getGapYear() {
+        return gapYear;
     }
 
-    public void setiCompletedAGapYearDueToAcademicPerformance(Boolean iCompletedAGapYearDueToAcademicPerformance) {
-        this.iCompletedAGapYearDueToAcademicPerformance = iCompletedAGapYearDueToAcademicPerformance;
+    public void setGapYear(Boolean gapYear) {
+        this.gapYear = gapYear;
     }
 
     public Boolean getFullNameDeclaration() {

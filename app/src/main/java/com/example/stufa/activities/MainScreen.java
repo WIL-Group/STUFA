@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.stufa.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -26,12 +28,25 @@ public class MainScreen extends AppCompatActivity {
     ImageView ivLogo;
     TextView tvLogo, tvSlogan;
 
+//    FirebaseAuth firebaseAuth;
+//    FirebaseUser firebaseUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_screen);
+
+//        firebaseAuth = FirebaseAuth.getInstance();
+
+        //tests if there is a user is already active and email is verified
+//        firebaseUser = firebaseAuth.getCurrentUser();
+//        if(firebaseUser != null && firebaseUser.isEmailVerified())
+//        {
+//            startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+//            finish();
+//        }
 
         /*----------------Animation Hooks---------------------*/
         topAnimation = AnimationUtils.loadAnimation(this,R.anim.top_animation);

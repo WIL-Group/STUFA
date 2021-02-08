@@ -7,16 +7,27 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stufa.R;
 import com.example.stufa.app_utilities.QueryAdapter;
 import com.example.stufa.app_utilities.Utilities;
+import com.example.stufa.data_models.Booking;
 import com.example.stufa.data_models.Query;
+import com.example.stufa.data_models.Request;
+import com.example.stufa.data_models.Student;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,13 +44,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemClicked {
 
     /*---------------------Variables----------------------------------*/
-    CheckBox cbBookAllowance, cbMealAllowance, cbGeneralQuery, cbAccommodationOrTransportAllowance;
-    EditText etQueryMessage;
-    Button btnSave, btnDelete, btnSubmit;
+    RadioGroup rgQueryType;
+    RadioButton rbMealAllowance, rbAccommodationOrTransportAllowance, rbBookAllowance;
+    EditText etDialogQueryMessage;
+    TextView tvQueryMessage, tvTypeMessage;
+    Button btnSave, btnDelete, btnSubmit, btnSaveMessage;
+    Dialog queryMessageDialog;
 
     RecyclerView recyclerView;
     private QueryAdapter myAdapter;
@@ -47,11 +62,13 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
     private ArrayList<Query> queries;
     Query query;
     boolean isAnswered = false;
-    String qType, qMessage, qId, qDate, studentNum, response, staffEmail, studentNumber, userID;
-    DatabaseReference queryReff,submittedQueryReff;
+    String qType, qMessage, qId, id, qDate, studentNum, response = "", staffEmail = "", studEmail,
+            studentNumber, studentEmail, studentId,  userID;
+    DatabaseReference queryReff, submittedQueryReff, userDatabaseRef;
     com.google.firebase.database.Query query1;
+    Student student;
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
     Date date = new Date();
 
     FirebaseAuth firebaseAuth;
@@ -61,14 +78,16 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_create_query);
 
         /*---------------------Hooks----------------------------------*/
-        cbBookAllowance = findViewById(R.id.cbBookAllowance);
-        cbMealAllowance = findViewById(R.id.cbMealAllowance);
-        cbAccommodationOrTransportAllowance = findViewById(R.id.cbAccommodationOrTransportAllowance);
-//        cbGeneralQuery = findViewById(R.id.cbGeneralQuery);
-        etQueryMessage = findViewById(R.id.etQueryMessage);
+        rgQueryType = findViewById(R.id.rgQueryType);
+        rbMealAllowance = findViewById(R.id.rbMealAllowance);
+        rbAccommodationOrTransportAllowance = findViewById(R.id.rbAccommodationOrTransportAllowance);
+        rbBookAllowance = findViewById(R.id.rbBookAllowance);
+        tvQueryMessage = findViewById(R.id.tvQueryMessage);
+        tvTypeMessage = findViewById(R.id.tvTypeMessage);
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -80,22 +99,69 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+        queryReff = Utilities.getDatabaseRefence().child("Queries");
+
+
         userID = firebaseAuth.getCurrentUser().getUid();
+
 
         layoutManager = new LinearLayoutManager(CreateQuery.this);
         recyclerView.setLayoutManager(layoutManager);
 
         qDate = dateFormat.format(date);
 
-        //Reads the data entered when the user registered just to check if we can read back the data
-        DocumentReference documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+        /*------------------Query Message dialog--------------------*/
+        queryMessageDialog = new Dialog(CreateQuery.this);
+        queryMessageDialog.setContentView(R.layout.custom_describe_query_background);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Objects.requireNonNull(queryMessageDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.tips_background));
+        }
+        queryMessageDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        queryMessageDialog.setCancelable(true);//when you click the outside of the dialog it will disappear
+        queryMessageDialog.getWindow().getAttributes().windowAnimations = R.style.tips_animation;
 
-                assert value != null;
-                studentNumber = value.getString("studentNumber");
-                //studEmail = value.getString("email");
+        btnSaveMessage = queryMessageDialog.findViewById(R.id.btnSaveMessage);
+        etDialogQueryMessage = queryMessageDialog.findViewById(R.id.etDialogQueryMessage);
+
+        /*---------------Reads the data entered when the user registered----------------*/
+        userDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Students");
+        userDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Student student = snapshot1.getValue(Student.class);
+                    assert student != null;
+
+                    studentNumber = student.getStudentNumber();
+                    studentEmail = student.getEmail();
+                    studentId = student.getId();
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        queryReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Query details = snapshot1.getValue(Query.class);
+                    assert details != null;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
 
             }
         });
@@ -104,6 +170,24 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         readData(list -> {
             myAdapter = new QueryAdapter(list,CreateQuery.this);
             recyclerView.setAdapter(myAdapter);
+        });
+
+        tvTypeMessage.setOnClickListener(v -> queryMessageDialog.show());
+        tvQueryMessage.setOnClickListener(v -> queryMessageDialog.show());
+
+        btnSaveMessage.setOnClickListener(v -> {
+
+            if(etDialogQueryMessage.getText().toString().isEmpty())
+            {
+                Utilities.show(getApplicationContext(), "Please enter message!");
+            }
+            else
+            {
+                String message = etDialogQueryMessage.getText().toString().trim();
+                tvQueryMessage.setText(message);
+                queryMessageDialog.dismiss();
+            }
+
         });
 
         btnSave.setOnClickListener(v -> {
@@ -126,8 +210,8 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         });
 
         btnSubmit.setOnClickListener(v -> {
+
             //submits the entire query to the firebase realtime database
-            
             if(query != null)
             {
                 submittedQueryReff = FirebaseDatabase.getInstance().getReference().child("Queries");
@@ -150,58 +234,68 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
 
     public void insertData()
     {
-        if(cbBookAllowance.isChecked())
+        if(rbBookAllowance.isChecked())
         {
-            qType = cbBookAllowance.getText().toString().trim();
+            qType = rbBookAllowance.getText().toString().trim();
 
-            if(etQueryMessage.getText().toString().isEmpty())
+            if(tvQueryMessage.getText().toString().isEmpty())
             {
-                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_LONG).show();
             }
             else
             {
                 studentNum = studentNumber;
-                qMessage = etQueryMessage.getText().toString().trim();
-                qId = queries.size() + qMessage.charAt(2) + "";
-                query = new Query(qId, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response);
+                studEmail = studentEmail;
+                qId = studentId;
+                qMessage = tvQueryMessage.getText().toString().trim();
+                id = queries.size() + qMessage.charAt(2) + "";
+
+                query = new Query(qId, id, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response, studEmail);
+
 
                 queryReff.push().setValue(query);
                 Toast.makeText(CreateQuery.this, "Query successfully added", Toast.LENGTH_SHORT).show();
             }
         }
-        else if(cbMealAllowance.isChecked())
+        else if(rbMealAllowance.isChecked())
         {
-            qType = cbMealAllowance.getText().toString().trim();
+            qType = rbMealAllowance.getText().toString().trim();
 
-            if(etQueryMessage.getText().toString().isEmpty())
+            if(tvQueryMessage.getText().toString().isEmpty())
             {
-                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_LONG).show();
             }
             else
             {
                 studentNum = studentNumber;
-                qMessage = etQueryMessage.getText().toString().trim();
-                qId = queries.size() + qMessage.charAt(2) + "";
-                query = new Query(qId, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response);
+                studEmail = studentEmail;
+                qId = studentId;
+                qMessage = tvQueryMessage.getText().toString().trim();
+                id = queries.size() + qMessage.charAt(2) + "";
+
+                query = new Query(qId, id, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response, studEmail);
 
                 queryReff.push().setValue(query);
                 Toast.makeText(CreateQuery.this, "Query successfully added", Toast.LENGTH_SHORT).show();
             }
         }
-        else if(cbAccommodationOrTransportAllowance.isChecked())
+        else if(rbAccommodationOrTransportAllowance.isChecked())
         {
-            qType = cbAccommodationOrTransportAllowance.getText().toString().trim();
+            qType = rbAccommodationOrTransportAllowance.getText().toString().trim();
 
-            if(etQueryMessage.getText().toString().isEmpty())
+            if(tvQueryMessage.getText().toString().isEmpty())
             {
-                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateQuery.this, "Please enter query message", Toast.LENGTH_LONG).show();
             }
             else
             {
                 studentNum = studentNumber;
-                qMessage = etQueryMessage.getText().toString().trim();
-                qId = queries.size() + qMessage.charAt(2) + "";
-                query = new Query(qId, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response);
+                studEmail = studentEmail;
+                qId = query.getqId();
+                qMessage = tvQueryMessage.getText().toString().trim();
+                id = queries.size() + qMessage.charAt(2) + "";
+
+                query = new Query(qId, id, isAnswered, staffEmail, qMessage, qType, qDate, studentNum, response, studEmail);
 
                 queryReff.push().setValue(query);
                 Toast.makeText(CreateQuery.this, "Query successfully added", Toast.LENGTH_SHORT).show();
@@ -209,16 +303,17 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
         }
         else
         {
-            Toast.makeText(CreateQuery.this,"Please select one of the boxes",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateQuery.this,"Please select one of the boxes",Toast.LENGTH_LONG).show();
         }
 
     }
 
     public  void deleteData()
     {
-        String toDelete = query.getqId();
+        String toDelete = query.getId();
 
-        query1 = queryReff.orderByChild("qId").equalTo(toDelete);
+        tvQueryMessage.setText("");
+        query1 = queryReff.orderByChild("id").equalTo(toDelete);
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -226,7 +321,7 @@ public class CreateQuery extends AppCompatActivity implements QueryAdapter.ItemC
                 {
                     ds.getRef().removeValue();
                 }
-                //Toast.makeText(CreateQuery.this, query.getqId()+" Removed!",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CreateQuery.this, query.getId()+" Query submitted!",Toast.LENGTH_SHORT).show();
             }
 
             @Override

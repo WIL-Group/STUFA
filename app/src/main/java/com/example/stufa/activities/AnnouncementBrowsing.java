@@ -1,6 +1,8 @@
 package com.example.stufa.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.example.stufa.R;
@@ -16,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +31,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
     AnnouncementAdapter adapter;
     ArrayList<Announcement> announcements;
     Announcement announcement;
+    CardView cwFullAnnouncement;
     private RecyclerView rv;
     public ProgressBar mProgressBar;
 //  private FirebaseCRUDHelper crudHelper=new FirebaseCRUDHelper();
@@ -41,7 +45,11 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.announcement_browsing);
+
+//        cwFullAnnouncement = findViewById(R.id.cwFullAnnouncement);
+//        cwFullAnnouncement.setCardBackgroundColor(Color.WHITE);
 
         announcements = new ArrayList<>();
         rv = findViewById(R.id.aList);
@@ -118,7 +126,7 @@ public class AnnouncementBrowsing extends AppCompatActivity implements Announcem
                 {
                     announcement = ds.getValue(Announcement.class);
                     List.add(announcement);
-                    //Collections.sort(List, Announcement.sort);
+                    Collections.sort(List, Announcement.sort);
                 }
 
                 fireBaseCallBack.onCallBack(List);

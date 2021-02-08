@@ -3,6 +3,7 @@ package com.example.stufa.data_models;
 public class Query {
 
     String qId;
+    String id;
     boolean isAnswered;
     String staffEmail;
     String queryMessage;
@@ -10,13 +11,15 @@ public class Query {
     String date;
     String studNum;
     String queryResponseMessage;
+    String studEmail;
 
     public Query() {
     }
 
-    public Query(String qId, boolean isAnswered, String staffEmail, String queryMessage, String queryType,
-                 String date, String studNum, String queryResponseMessage) {
+    public Query(String qId, String id, boolean isAnswered, String staffEmail, String queryMessage, String queryType,
+                 String date, String studNum, String queryResponseMessage, String studEmail) {
         this.qId = qId;
+        this.id = id;
         this.isAnswered = isAnswered;
         this.staffEmail = staffEmail;
         this.queryMessage = queryMessage;
@@ -24,6 +27,7 @@ public class Query {
         this.date = date;
         this.studNum = studNum;
         this.queryResponseMessage = queryResponseMessage;
+        this.studEmail = studEmail;
     }
 
     public String getqId() {
@@ -34,12 +38,20 @@ public class Query {
         this.qId = qId;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public boolean isAnswered() {
         return isAnswered;
     }
 
-    public void setAnswered(boolean answered) {
-        isAnswered = answered;
+    public void setAnswered(boolean isAnswered) {
+        isAnswered = isAnswered;
     }
 
     public String getStaffEmail() {
@@ -88,5 +100,13 @@ public class Query {
 
     public void setQueryResponseMessage(String queryResponseMessage) {
         this.queryResponseMessage = queryResponseMessage;
+    }
+
+    public String getStudEmail() {
+        return studEmail;
+    }
+
+    public void setStudEmail(String studEmail) {
+        this.studEmail = studEmail;
     }
 }

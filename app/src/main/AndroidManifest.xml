@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.STUFA">
-        <activity android:name=".activities.StudentProfile"/>
+        <activity android:name=".activities.Tips"></activity>
+        <activity android:name=".activities.EditBooking" />
+        <activity android:name=".activities.StudentProfile" />
         <activity android:name=".activities.AnnouncementBrowsing" />
         <activity android:name=".activities.Login" />
         <activity android:name=".activities.FillForm" />

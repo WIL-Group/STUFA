@@ -1,6 +1,7 @@
 package com.example.stufa.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +47,7 @@ public class Login extends AppCompatActivity {
 
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     DatabaseReference databaseReference;
     ArrayList<Announcement> announcements;
@@ -55,6 +58,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+
 
         /*-----------------Hooks--------------------*/
         etEmail = findViewById(R.id.etEmail);
@@ -77,6 +81,14 @@ public class Login extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         readData(list -> Utilities.DataCache = list);
+
+        //tests if there is a user is already active and email is verified
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null && firebaseUser.isEmailVerified())
+        {
+            startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+            finish();
+        }
 
         btnLogin.setOnClickListener(v -> {
 
@@ -111,9 +123,19 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(Login.this, "Successfully Logged In!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
-                            finish();
+                            if(firebaseAuth.getCurrentUser().isEmailVerified())
+                            {
+                                Toast.makeText(Login.this, "Successfully Logged In!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
+                                finish();
+                            }
+                            else
+                            {
+                                Toast.makeText(Login.this, "Please verify your email address!", Toast.LENGTH_LONG).show();
+                                progressBarLayout.setVisibility(View.GONE);
+                                contentLayout.setVisibility(View.VISIBLE);
+                            }
+
                         }
                         else
                         {
@@ -131,6 +153,10 @@ public class Login extends AppCompatActivity {
 
             Intent intent = new Intent(Login.this, CreateAccount.class);
 
+//            Intent intent2 = new Intent(Login.this, CreateAccount.class);
+//            startActivityForResult(intent2, 2);
+
+
             Pair[] pairs = new Pair[8];
 
             pairs[0] = new Pair<View,String>(ivLogo, "logo_image");
@@ -145,6 +171,7 @@ public class Login extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Login.this, pairs);
                 startActivity(intent, options.toBundle());
+                startActivityForResult(intent, 2);
             }
 
         });
@@ -155,6 +182,26 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
 
         });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                etEmail.setText(data.getStringExtra("email"));
+                etPassword.setText(data.getStringExtra("password"));
+            }
+
+            if (resultCode == RESULT_CANCELED)
+            {
+                Utilities.show(getApplicationContext(), "No data received!");
+            }
+        }
 
     }
 

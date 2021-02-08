@@ -59,30 +59,60 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
-                android:text="You can update your personal details below, then click Update"
+                android:text="@string/you_can_update_your_personal_details_below_then_click_update"
                 android:textColor="@color/shady"
                 android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/etEmailAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
-                android:hint="update your email address:"
+                android:hint="@string/update_your_email_address"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/holo_orange_light"
                 android:textColorHint="@color/shady" />
 
             <EditText
-                android:id="@+id/etCampus"
-                android:layout_width="wrap_content"
+                android:id="@+id/etFundingType"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:ems="10"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:hint="new campus location:"
+                android:hint="@string/new_funding_type"
+                android:textColor="@android:color/holo_orange_light"
+                android:textColorHint="@color/shady"/>
+
+            <EditText
+                android:id="@+id/etBursar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:hint="@string/new_bursar"
+                android:textColor="@android:color/holo_orange_light"
+                android:textColorHint="@color/shady"/>
+
+            <EditText
+                android:id="@+id/etCampus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:hint="@string/new_campus_location"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/holo_orange_light"
                 android:textColorHint="@color/shady"/>
@@ -90,12 +120,14 @@
 
             <EditText
                 android:id="@+id/etCourse"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
-                android:hint="new course programme:"
+                android:hint="@string/new_course_programme"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/holo_orange_light"
                 android:textColorHint="@color/shady"/>
@@ -107,7 +139,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/buttons"
-                android:text="Update"/>
+                android:text="@string/update"/>
 
         </LinearLayout>
 
@@ -140,7 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Your booking details:"
+                            android:text="@string/your_booking_details"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -151,7 +183,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
 
                         <TextView
@@ -160,8 +191,25 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/tvBookingID"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="10dp"-->
+<!--                            android:layout_marginEnd="10dp"-->
+<!--                            android:text="TextView"-->
+<!--                            android:textColor="#FFFFFF" />-->
+
+                        <TextView
+                            android:id="@+id/tvBookingNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="#FFFFFF" />
+
 
                         <TextView
                             android:id="@+id/tvBookingDate"
@@ -169,7 +217,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
 
                         <TextView
@@ -178,7 +225,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
 
                         <TextView
@@ -187,7 +233,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
 
                         <TextView
@@ -196,7 +241,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="TextView"
                             android:textColor="#FFFFFF" />
 
                     </LinearLayout>
@@ -214,7 +258,7 @@
                             android:layout_marginStart="25dp"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/buttons"
-                            android:text="DELETE" />
+                            android:text="@string/_delete" />
 
                         <Button
                             android:id="@+id/btnEditBooking"
@@ -224,7 +268,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/buttons"
-                            android:text="EDIT " />
+                            android:text="@string/edit" />
 
                     </LinearLayout>
 
@@ -242,7 +286,7 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:orientation="vertical">
@@ -252,7 +296,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Your Requests:"
+                            android:text="@string/your_latest_request"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -263,8 +307,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:textColor="#FFFFFF"
-                            android:text="TextView" />
+                            android:textColor="#FFFFFF"/>
 
                         <TextView
                             android:id="@+id/tvRequestDate"
@@ -272,8 +315,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:textColor="#FFFFFF"
-                            android:text="TextView" />
+                            android:textColor="#FFFFFF"/>
 
                         <TextView
                             android:id="@+id/tvRequestType"
@@ -281,8 +323,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:textColor="#FFFFFF"
-                            android:text="TextView" />
+                            android:textColor="#FFFFFF" />
 
 
                         <TextView
@@ -291,28 +332,27 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:textColor="#FFFFFF"
-                            android:text="Answered" />
+                            android:textColor="#FFFFFF" />
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:orientation="vertical">-->
 
-                        <Button
-                            android:id="@+id/btnEditRequest"
-                            android:layout_width="120dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@drawable/buttons"
-                            android:text="EDIT " />
+<!--                        <Button-->
+<!--                            android:id="@+id/btnEditRequest"-->
+<!--                            android:layout_width="120dp"-->
+<!--                            android:layout_height="35dp"-->
+<!--                            android:layout_marginStart="40dp"-->
+<!--                            android:layout_marginTop="30dp"-->
+<!--                            android:layout_marginBottom="5dp"-->
+<!--                            android:background="@drawable/buttons"-->
+<!--                            android:text="EDIT " />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
 
@@ -328,7 +368,7 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:orientation="vertical">
@@ -338,7 +378,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Your Queries:"
+                            android:text="@string/queries"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
                             android:textStyle="bold"/>

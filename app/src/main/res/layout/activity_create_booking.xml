@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/app_background"
     tools:context=".activities.CreateBooking">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="Create Your Booking Below"
-            android:textColor="@android:color/holo_orange_light"
+            android:text="@string/create_your_booking_below"
+            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:gravity="center_horizontal"
-            android:text="Click on the calendar to choose a date for booking"
+            android:text="@string/click_on_the_calendar_to_choose_a_date_for_booking"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,93 +58,112 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/app_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCalendar">
 
-
-            <CheckBox
-                android:id="@+id/cbQueryRelatedBooking"
+            <RadioGroup
+                android:id="@+id/rgBookingType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:text="QueryRelatedBooking"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/book_allowance"
-                android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/meal_allowance"
-                android:textSize="15sp" />
+                <RadioButton
+                    android:id="@+id/rbQueryRelatedBooking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:checked="true"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="@string/query_related_booking"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/accommodation_or_transport_allowance"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/book_allowance"
+                    android:textSize="15sp" />
 
-            <CheckBox
-                android:id="@+id/cbGeneralBooking"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:text="General booking" />
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/meal_allowance"
+                    android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="- Allowas the student to get assistance on any complex issues"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/accommodation_or_transport_allowance"
+                    android:textSize="15sp" />
 
-            <CheckBox
-                android:id="@+id/cbRequestRelatedBooking"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:text="Request related booking" />
+                <RadioButton
+                    android:id="@+id/rbGeneralBooking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="@string/general_booking" />
 
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="- Financial Clearance"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/allows_the_student_to_get_assistance_on_any_complex_issues"
+                    android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:text="- Financial Statement"
-                android:textSize="15sp" />
+                <RadioButton
+                    android:id="@+id/rbRequestRelatedBooking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="@string/request_related_booking" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/_financial_clearance"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/_financial_statement"
+                    android:textSize="15sp" />
+
+            </RadioGroup>
+
 
             <Button
                 android:id="@+id/btnCreate"
@@ -153,7 +173,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="80dp"
                 android:background="@drawable/buttons"
-                android:text="Create" />
+                android:text="@string/create" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,6 +181,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
+                android:background="@drawable/app_background"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
@@ -169,7 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Your booking details:"
+                    android:text="@string/your_booking_details"
                     android:textColor="#000000"
                     android:textSize="15sp" />
 
@@ -178,35 +199,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="TextView" />
+                    android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:id="@+id/tvStudentNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="TextView" />
+                    android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:id="@+id/tvBookingType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="TextView" />
+                    android:layout_marginEnd="10dp"/>
 
-                <TextView
-                    android:id="@+id/tvDateCreated"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="TextView" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvDateCreated"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginEnd="10dp"/>-->
 
                 <TextView
                     android:id="@+id/tvStudentEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/tvBookingID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -226,7 +250,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:text="Delete" />
+                        android:text="@string/delete" />
 
                     <Button
                         android:id="@+id/btnSubmit"

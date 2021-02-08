@@ -8,4 +8,10 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/lock_out"/>
 
+    <item android:title="@string/tips"
+        android:id="@+id/tips"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/tips"/>
+
 </menu>

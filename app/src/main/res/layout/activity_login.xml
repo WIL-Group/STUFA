@@ -20,27 +20,25 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/assistance_logo"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView"-->
-<!--            style="@style/stufa_layout"/>-->
-
         <TextView
             android:id="@+id/tvLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:transitionName="logo_text"
             android:layout_marginTop="10dp"
-            android:text="Hello, Welcome to STUFA"
-            android:textSize="40sp"
+            android:text="@string/welcome_to_the_student_financial_assistance_app"
+            android:textSize="30sp"
+            android:gravity="center_horizontal"
             android:fontFamily="@font/berkshire_swash"
             android:textColor="@android:color/holo_orange_light"/>
+        <!--android:fontFamily="@font/amaranth"-->
 
         <TextView
             android:id="@+id/tvSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Login to continue"
+            android:text="@string/login_to_continue"
             android:transitionName="tv_login_to_continue_trans"
             android:textSize="20sp"
             android:textColor="#fff"

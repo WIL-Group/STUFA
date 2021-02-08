@@ -3,7 +3,7 @@ package com.example.stufa.data_models;
 
 public class Booking {
 
-    //String id;
+    String id;
     String reason;
     boolean attendedTo;
     int bookingNum;
@@ -16,10 +16,10 @@ public class Booking {
     {
     }
 
-    public Booking(/*String id,*/ String reason, boolean attendedTo, int bookingNum, String date, String studNum
+    public Booking(String id, String reason, boolean attendedTo, int bookingNum, String date, String studNum
                    , String studEmail)
     {
-        //this.id = id;
+        this.id = id;
         this.reason = reason;
         this.attendedTo = attendedTo;
         this.bookingNum = bookingNum;
@@ -36,13 +36,13 @@ public class Booking {
         this.studEmail = studEmail;
     }
 
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getReason() {
         return reason;

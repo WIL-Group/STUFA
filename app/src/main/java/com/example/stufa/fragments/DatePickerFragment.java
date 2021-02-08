@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.sql.Time;
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
@@ -19,6 +20,8 @@ public class DatePickerFragment extends DialogFragment
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
+
+        //Time t = Time.valueOf("");
 
 
         return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener)

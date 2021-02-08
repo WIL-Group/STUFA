@@ -2,6 +2,7 @@ package com.example.stufa.app_utilities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import android.widget.TextView;
 
 import com.example.stufa.R;
 import com.example.stufa.activities.AnnouncementBrowsing;
+import com.example.stufa.activities.StudentHomePage;
 import com.example.stufa.data_models.Announcement;
 import com.example.stufa.data_models.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapter.ViewHolder>
@@ -55,9 +59,16 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     @Override
     public void onBindViewHolder(@NonNull AnnouncementAdapter.ViewHolder holder, int i) {
         //get the current announcement
+
+
         holder.itemView.setTag(announcements.get(i));
         holder.itemTvTitle.setText(announcements.get(i).getTitle());
         holder.itemTvName.setText(announcements.get(i).getStaffName());
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+//        {
+//            holder.itemCardView.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.buttons));
+//        }
+
         if (announcements.get(i).isViewed())
         {
             holder.itemIvView.setImageResource(R.drawable.viewed);

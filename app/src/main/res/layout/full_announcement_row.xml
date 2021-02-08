@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/tips_background"
     tools:context=".activities.AnnouncementBrowsing">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cwFullAnnouncement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/buttons"
-        app:cardBackgroundColor="@color/dark_red"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="false">

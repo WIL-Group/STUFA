@@ -14,15 +14,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stufa.R;
+import com.example.stufa.data_models.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,16 +36,22 @@ import java.util.Map;
 public class CreateAccount extends AppCompatActivity {
 
     /*-------------------------Variables------------------------*/
-    EditText etName, etSurname, etEmail, etStudentNumber, etPassword, etConfirmPassword;
+    EditText etName, etSurname, etEmail, etFundingType, etBursar, etStudentNumber, etPassword, etConfirmPassword;
     Button btnSignUp;
     TextView tvLogin;
 
     SwitchCompat switchPos;
-    View progressBarLayout, contentLayout;
+    View progressBarLayout, createAccountContentLayout;
+    ProgressBar progressBar;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
-    String userID;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+
+    String userID, name, surname, password, confirmPassword, email, id, studentNumber, fundingType, bursar, campus;
+    Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,8 @@ public class CreateAccount extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etSurname = findViewById(R.id.etSurname);
         etEmail = findViewById(R.id.etEmail);
+        etFundingType = findViewById(R.id.etFundingType);
+        etBursar = findViewById(R.id.etBursar);
         etStudentNumber = findViewById(R.id.etStudentNumber);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
@@ -60,8 +72,13 @@ public class CreateAccount extends AppCompatActivity {
         tvLogin = findViewById(R.id.tvLogin);
 
         switchPos = findViewById(R.id.switchPos);
+
         progressBarLayout = findViewById(R.id.progressBarLayout);
-        contentLayout = findViewById(R.id.contentLayout);
+        createAccountContentLayout = findViewById(R.id.createAccountContentLayout);
+
+        progressBar = findViewById(R.id.progressBar);
+
+        createAccountContentLayout.setVisibility(View.VISIBLE);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -97,101 +114,82 @@ public class CreateAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String name = etName.getText().toString().trim();
-                final String surname = etSurname.getText().toString().trim();
-                final String email = etEmail.getText().toString().trim();
-                final String studentNumber = etStudentNumber.getText().toString().trim();
-                final String campus = switchPos.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
-                String confirmPassword = etConfirmPassword.getText().toString().trim();
+                validations();
 
-                if(TextUtils.isEmpty(name))
-                {
-                    etName.setError("Name address is Required");
-                    return;
-                }
-                else if(TextUtils.isEmpty(surname))
-                {
-                    etSurname.setError("Surname address is Required");
-                    return;
-                }
-                else if(TextUtils.isEmpty(email))
-                {
-                    etEmail.setError("Email address is Required");
-                    return;
-                }
-
-                else if(TextUtils.isEmpty(campus))
-                {
-                    Toast.makeText(CreateAccount.this,
-                            getString(R.string.please_choose_your_campus),
-                            Toast.LENGTH_SHORT).show();;
-                    return;
-                }
-
-                else if(TextUtils.isEmpty(studentNumber))
-                {
-                    etStudentNumber.setError("Student number is Required");
-                    return;
-                }
-                else if(TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword))
-                {
-                    etPassword.setError("Password is Required");
-                    etConfirmPassword.setError("Password is Required");
-                    return;
-                }
-                else if(password.length() < 6)
-                {
-                    etPassword.setError("Password has to be 6 characters or more");
-                    return;
-                }
-                else if(!etConfirmPassword.getText().toString().equals(etPassword.getText().toString()))
-                {
-                    etConfirmPassword.setError("Passwords do not match");
-                    return;
-                }
-
-
+                createAccountContentLayout.setVisibility(View.GONE);
                 progressBarLayout.setVisibility(View.VISIBLE);
-                contentLayout.setVisibility(View.GONE);
+
+                rootNode = FirebaseDatabase.getInstance();
+                reference = rootNode.getReference("Students");
 
                 //will now register the use into Firebase
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+//                        progressBarLayout.setVisibility(View.GONE);
+//                        createAccountContentLayout.setVisibility(View.VISIBLE);
+
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(CreateAccount.this, "Successfully created!", Toast.LENGTH_SHORT).show();
-
-                            userID = firebaseAuth.getCurrentUser().getUid();
-
-                            DocumentReference documentReference = firestore.collection("users").document(userID);
-
-                            Map<String, Object> user = new HashMap<>();
-
-
-                            user.put("name", name);
-                            user.put("surname", surname);
-                            user.put("email", email);
-                            user.put("studentNumber", studentNumber);
-                            user.put("campus", campus);
-
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
+                                public void onComplete(@NonNull Task<Void> task) {
 
-                                    Toast.makeText(CreateAccount.this, "Profile successfully created!", Toast.LENGTH_LONG).show();
+                                    if(task.isSuccessful())
+                                    {
+                                        userID = firebaseAuth.getCurrentUser().getUid();
+                                        String id = userID;
 
+                                        //saving the user with realtime database
+                                        Student student = new Student(id, name, surname, email, studentNumber,
+                                                fundingType, bursar, campus);
+
+                                        reference.child(id).setValue(student);
+
+                                        Intent intent = new Intent();
+                                        intent.putExtra("email", email);
+                                        intent.putExtra("password", password);
+                                        setResult(RESULT_OK, intent);
+
+                                        Toast.makeText(CreateAccount.this, "Successfully created. Please check your email for verification", Toast.LENGTH_SHORT).show();
+                                        clearEntries();
+                                        startActivity(new Intent(getApplicationContext(), Login.class));
+                                        CreateAccount.this.finish();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(CreateAccount.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
-                            CreateAccount.this.finish();
+
+                            //saving the user using firestore
+//                            DocumentReference documentReference = firestore.collection("users").document(userID);
+//
+//                            Map<String, Object> user = new HashMap<>();
+//
+//
+//                            user.put("name", name);
+//                            user.put("surname", surname);
+//                            user.put("email", email);
+//                            user.put("studentNumber", studentNumber);
+//                            user.put("campus", campus);
+//
+//                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//
+//                                    Toast.makeText(CreateAccount.this, "Profile successfully created!", Toast.LENGTH_LONG).show();
+//
+//                                }
+//                            });
                         }
                         else //if the user already exists in the database an error message will show
                         {
                             Toast.makeText(CreateAccount.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             progressBarLayout.setVisibility(View.GONE);
-                            startActivity(new Intent(getApplicationContext(),CreateAccount.class));
+                            createAccountContentLayout.setVisibility(View.VISIBLE);
+                            //startActivity(new Intent(getApplicationContext(),CreateAccount.class));
                         }
                     }
                 });
@@ -209,6 +207,95 @@ public class CreateAccount extends AppCompatActivity {
         });
 
     }
+
+    public void validations()
+    {
+        //final String id = student.getId();
+        name = etName.getText().toString().trim();
+        surname = etSurname.getText().toString().trim();
+        email = etEmail.getText().toString().trim();
+        fundingType = etFundingType.getText().toString().trim();
+        bursar = etBursar.getText().toString().trim();
+        studentNumber = etStudentNumber.getText().toString().trim();
+        campus = switchPos.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
+        confirmPassword = etConfirmPassword.getText().toString().trim();
+
+        Intent intent = new Intent();
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        setResult(RESULT_OK, intent);
+
+        if(TextUtils.isEmpty(name))
+        {
+            etName.setError("Name address is Required");
+            return;
+        }
+        else if(TextUtils.isEmpty(surname))
+        {
+            etSurname.setError("Surname address is Required");
+            return;
+        }
+        else if(TextUtils.isEmpty(email))
+        {
+            etEmail.setError("Email address is Required");
+            return;
+        }
+        else if(TextUtils.isEmpty(fundingType))
+        {
+            etFundingType.setError("Funding Type is Required");
+            return;
+        }
+        else if(TextUtils.isEmpty(bursar))
+        {
+            etBursar.setError("Bursar is Required");
+            return;
+        }
+
+        else if(TextUtils.isEmpty(campus))
+        {
+            Toast.makeText(CreateAccount.this,
+                    getString(R.string.please_choose_your_campus),
+                    Toast.LENGTH_SHORT).show();;
+            return;
+        }
+
+        else if(TextUtils.isEmpty(studentNumber))
+        {
+            etStudentNumber.setError("Student number is Required");
+            return;
+        }
+        else if(TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword))
+        {
+            etPassword.setError("Password is Required");
+            etConfirmPassword.setError("Password is Required");
+            return;
+        }
+        else if(password.length() < 6)
+        {
+            etPassword.setError("Password has to be 6 characters or more");
+            return;
+        }
+        else if(!etConfirmPassword.getText().toString().equals(etPassword.getText().toString()))
+        {
+            etConfirmPassword.setError("Passwords do not match");
+            return;
+        }
+    }
+
+    public void clearEntries()
+    {
+        etName.setText("");
+        etSurname.setText("");
+        etEmail.setText("");
+        etFundingType.setText("");
+        etBursar.setText("");
+        etStudentNumber.setText("");
+        switchPos.setText("");
+        etPassword.setText("");
+         etConfirmPassword.setText("");
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

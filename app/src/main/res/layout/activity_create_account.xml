@@ -8,7 +8,7 @@
     tools:context=".activities.CreateAccount">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/contentLayout"
+        android:id="@+id/createAccountContentLayout"
         style="@style/content_layout">
 
         <ImageView
@@ -107,11 +107,39 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFundingType"
+            style="@style/til_funding_type_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilStudentNumber">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFundingType"
+                style="@style/funding_type_text_input_edit_text"
+                android:transitionName="et_funding_type_trans"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBursar"
+            style="@style/til_bursar_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilFundingType">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etBursar"
+                style="@style/bursar_text_input_edit_text"
+                android:transitionName="et_bursar_trans" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEnterPassword"
             style="@style/til_enter_password_style"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilStudentNumber">
+            app:layout_constraintTop_toBottomOf="@+id/tilBursar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -164,7 +192,7 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="150dp" />
+                android:layout_marginTop="150dp"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

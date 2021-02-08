@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--  MainScreen Activity  -->
     <style name="authentications_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -52,6 +53,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--  Login Activity  -->
     <style name="til_username_login_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -128,6 +130,7 @@
         <item name="android:textColor">@android:color/holo_orange_light</item>
     </style>
 
+    <!--  Create Account Activity  -->
     <style name="content_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -233,8 +236,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
-        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
-        <item name="errorEnabled">true</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
         <item name="startIconDrawable">@drawable/card</item>
         <item name="hintTextAppearance">@style/FloatingHintStyle</item>
         <item name="android:hint">@string/student_number</item>
@@ -253,12 +255,56 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="til_funding_type_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
+        <item name="startIconDrawable">@drawable/money</item>
+        <item name="hintTextAppearance">@style/FloatingHintStyle</item>
+        <item name="android:hint">@string/funding_type</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+    </style>
+
+    <style name="funding_type_text_input_edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="til_bursar_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
+        <item name="startIconDrawable">@drawable/bursar</item>
+        <item name="hintTextAppearance">@style/FloatingHintStyle</item>
+        <item name="android:hint">@string/bursar</item>
+        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+    </style>
+
+    <style name="bursar_text_input_edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:background">@drawable/buttons</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
     <style name="til_enter_password_style" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
-        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
         <item name="endIconMode">password_toggle</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/lock</item>
@@ -281,7 +327,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/switch_margin_start</item>
         <item name="android:layout_marginEnd">@dimen/switch_margin_start</item>
-        <item name="android:layout_marginTop">@dimen/no_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/tv_fullname_margin_start</item>
         <item name="endIconMode">password_toggle</item>
         <item name="errorEnabled">true</item>
         <item name="startIconDrawable">@drawable/lock</item>
@@ -387,12 +433,11 @@
     <style name="tv_fullname">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">@dimen/fullname_weight</item>
-        <item name="android:layout_marginStart">@dimen/tv_fullname_margin_start</item>
-        <item name="android:layout_marginEnd">@dimen/tv_fullname_margin_end</item>
         <item name="android:textColor">@android:color/holo_orange_light</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/tv_greeting</item>
+        <item name="android:fontFamily">@font/berkshire_swash</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="tv_assistance">

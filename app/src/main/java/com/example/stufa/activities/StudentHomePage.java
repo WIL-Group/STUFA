@@ -10,14 +10,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.stufa.R;
@@ -25,8 +30,10 @@ import com.example.stufa.app_utilities.HomeAdapter;
 import com.example.stufa.app_utilities.Utilities;
 import com.example.stufa.data_models.Announcement;
 import com.example.stufa.data_models.Booking;
+import com.example.stufa.data_models.Student;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +47,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class StudentHomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,16 +55,21 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
     DrawerLayout drawer_layout;
     NavigationView nav_view;
     Toolbar my_toolbar;
+    Button btnYes, btnNo, btnLogout, btnCancelLogout;
+    Dialog tipsDialog, logoutDialog;
+    View sHomeProgressBarLayout;
 
+    ProgressBar progressBar;
     ImageView ivCreateQuery, ivCreateRequest, ivCreateBooking, ivFillForm;
-    TextView tvGreeting, tvFullName, tvBookingPercentage;
+    TextView tvFullName, tvBookingPercentage;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     FirebaseFirestore firestore;
-    String userID;
+    String userID, name, surname;
     FragmentManager fragmentManager;
     RecyclerView rView;
-    int totalNumberOfBookings;
-    DatabaseReference databaseReference;
+    int totalNumberOfBookings, maxBookings = 10;
+    DatabaseReference databaseReference, userDatabaseRef;
     ArrayList<Announcement> announcements;
     ArrayList<Booking> bookings;
     Announcement announcement;
@@ -74,13 +87,43 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         nav_view = findViewById(R.id.nav_view);
         my_toolbar = findViewById(R.id.my_toolbar);
 
-        tvGreeting = findViewById(R.id.tvGreeting);
         tvFullName = findViewById(R.id.tvFullName);
         ivCreateBooking = findViewById(R.id.ivCreateBooking);
         ivCreateQuery = findViewById(R.id.ivCreateQuery);
         ivCreateRequest = findViewById(R.id.ivCeateRequest);
         ivFillForm = findViewById(R.id.ivFillForm);
         tvBookingPercentage = findViewById(R.id.tvBookingPercentage);
+
+        sHomeProgressBarLayout = findViewById(R.id.sHomeProgressBarLayout);
+
+        /*------------------Tips dialog--------------------*/
+        tipsDialog = new Dialog(StudentHomePage.this);
+        tipsDialog.setContentView(R.layout.custom_tips_background);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Objects.requireNonNull(tipsDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.tips_background));
+        }
+        tipsDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        tipsDialog.setCancelable(true);//when you click the outside of the dialog it will disappear
+        tipsDialog.getWindow().getAttributes().windowAnimations = R.style.tips_animation;
+
+        /*------------------Logout dialog--------------------*/
+        logoutDialog = new Dialog(StudentHomePage.this);
+        logoutDialog.setContentView(R.layout.custom_logout_message_background);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Objects.requireNonNull(logoutDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.tips_background));
+        }
+        logoutDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        logoutDialog.setCancelable(true);//when you click the outside of the dialog it will disappear
+        logoutDialog.getWindow().getAttributes().windowAnimations = R.style.tips_animation;
+
+        btnYes = tipsDialog.findViewById(R.id.btnYes);
+        btnNo = tipsDialog.findViewById(R.id.btnNo);
+        btnLogout = logoutDialog.findViewById(R.id.btnLogout);
+        btnCancelLogout = logoutDialog.findViewById(R.id.btnCancelLogout);
+
+
 
         /*--------------------Fragment and Recycler list view----------------------*/
         fragmentManager = getSupportFragmentManager();
@@ -90,7 +133,9 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
         /*--------------------Tool Bar----------------------*/
         setSupportActionBar(my_toolbar);
-        my_toolbar.setTitle(getString(R.string.empty));
+        //my_toolbar.setTitle(getString(R.string.empty));
+        getSupportActionBar().setTitle("Dashboard");
+//        getSupportActionBar().setIcon(R.drawable.menu);
 
         /*--------------------Navigation Drawer Menu----------------------*/
         nav_view.bringToFront();
@@ -103,20 +148,46 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
         /*--------------------Firebase Instance retrievals----------------------*/
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         userID = firebaseAuth.getCurrentUser().getUid();
 
-        /*---------------Reads the data entered when the user registered just to check if we can read back the data----------------*/
-        DocumentReference documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+        //tests if there is a user is already active and email is verified
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null)
+        {
+            tipsDialog.show();
+        }
 
-                assert value != null;
-                tvFullName.setText(String.format("%s%s%s", value.getString("name"), " ", value.getString("surname")));
+        /*---------------Reads the data entered when the user registered----------------*/
+        userDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Students");
+        userDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Student student = snapshot1.getValue(Student.class);
+                    assert student != null;
+
+                    name = student.getName();
+                    surname = student.getSurname();
+
+                    tvFullName.setText(String.format("%s%s%s", name, " ", surname));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
         rView.setHasFixedSize(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            rView.setBackgroundDrawable(getDrawable(R.drawable.buttons));
+        }
         announcements = new ArrayList<>();
         bookings = new ArrayList<>();
 
@@ -160,12 +231,41 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
             startActivity(intent);            });
 
         ivCreateBooking.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
-            startActivity(intent);            });
+
+            if(bookings.size() == maxBookings)
+            {
+                Utilities.show(getApplicationContext(), "Sorry, Bookings are full at the moment");
+            }
+            else
+            {
+                Intent intent = new Intent(StudentHomePage.this, CreateBooking.class);
+                startActivity(intent);
+            }
+        });
 
         ivFillForm.setOnClickListener(v -> {
             Intent intent = new Intent(StudentHomePage.this, FillForm.class);
             startActivity(intent);            });
+
+        btnYes.setOnClickListener(v -> {
+
+            startActivity(new Intent(getApplicationContext(), Tips.class));
+            tipsDialog.dismiss();
+        });
+
+        btnNo.setOnClickListener(v -> tipsDialog.dismiss());
+
+        btnLogout.setOnClickListener(v -> {
+
+            Toast.makeText(this, "Logging user out...", Toast.LENGTH_LONG).show();
+
+            FirebaseAuth.getInstance().signOut();//used for logging out the user
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finish();
+            logoutDialog.dismiss();
+        });
+
+        btnCancelLogout.setOnClickListener(v -> logoutDialog.dismiss());
 
     }
 
@@ -185,12 +285,11 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
         if (item.getItemId() == R.id.logout)//Logs out the use and sends them to the Login Activity
         {
-
-            Toast.makeText(this, "Logging user out...", Toast.LENGTH_LONG).show();
-
-            FirebaseAuth.getInstance().signOut();//used for logging out the user
-            startActivity(new Intent(getApplicationContext(), Login.class));
-            finish();
+            logoutDialog.show();
+        }
+        else if (item.getItemId() == R.id.tips)//Displays a dialog box to ask if the user wants tips or not
+        {
+            tipsDialog.show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -231,7 +330,14 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
             case R.id.nav_create_booking:
 
-                startActivity(new Intent(getApplicationContext(), CreateBooking.class));
+                if(bookings.size() == maxBookings)
+                {
+                    Utilities.show(getApplicationContext(), "Sorry, Bookings are full at the moment");
+                }
+                else
+                {
+                    startActivity(new Intent(getApplicationContext(), CreateBooking.class));
+                }
                 break;
 
             case R.id.nav_fill_form:
@@ -239,11 +345,11 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
                 startActivity(new Intent(getApplicationContext(), FillForm.class));
                 break;
 
-            case R.id.nav_login:
-
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
-                break;
+//            case R.id.nav_login:
+//
+//                startActivity(new Intent(getApplicationContext(), Login.class));
+//                finish();
+//                break;
 
             case R.id.nav_profile:
 
@@ -252,11 +358,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
 
             case R.id.nav_logout:
 
-                Toast.makeText(this, "Logging user out...", Toast.LENGTH_SHORT).show();
-
-                FirebaseAuth.getInstance().signOut();//used for logging out the user
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
+                logoutDialog.show();
                 break;
         }
 
@@ -295,7 +397,7 @@ public class StudentHomePage extends AppCompatActivity implements NavigationView
                     announcement = ds.getValue(Announcement.class);
                     announcement.setMessage("");
                     List.add(announcement);
-                    //Collections.sort(List, Announcement.sort);
+                    Collections.sort(List, Announcement.sort);
                 }
 
                 fireCallBack.onFireCallback(List);

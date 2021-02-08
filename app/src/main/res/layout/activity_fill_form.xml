@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
     tools:context=".activities.FillForm">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="Submit to your institution Financial Aid Office/Student Support Office"
+            android:text="@string/submit_to_your_institution_financial_aid_office_student_support_office"
             android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,7 @@
             android:layout_marginTop="-5dp"
             android:layout_marginBottom="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -56,12 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="NOTE: 1. Please complete all the details below to enable the processing of your
-appeal, incomplete appeal forms will not be considered. 2. Appeals will only be considered
-on valid grounds. The types of appeals are listed below for indication. 3. Appeals for post
-graduate studies or unfunded programmes cannot be considered. 4. Appeals will be considered
-by the Institutions Financial Aid Committee or designated committee for recommendation to
-the Financial Aid"
+            android:text="@string/note_1_please_complete_all_the_details_below_to_enable_the_processing_of_your_appeal_incomplete_appeal_forms_will_not_be_considered_2_appeals_will_only_be_considered_on_valid_grounds_the_types_of_appeals_are_listed_below_for_indication_3_appeals_for_post_graduate_studies_or_unfunded_programmes_cannot_be_considered_4_appeals_will_be_considered_by_the_institutions_financial_aid_committee_or_designated_committee_for_recommendation_to_the_financial_aid"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -72,7 +68,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -83,7 +79,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="3dp"
-            android:text="Personal Information"
+            android:text="@string/personal_information"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="16sp"
@@ -107,7 +103,7 @@ the Financial Aid"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:inputType="textPersonName"/>
 
             <EditText
@@ -119,7 +115,7 @@ the Financial Aid"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7"
-                android:hint="Surname"
+                android:hint="@string/surname"
                 android:inputType="textPersonName"/>
 
         </LinearLayout>
@@ -139,7 +135,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="ID Number:"
+                android:hint="@string/id_number"
                 android:inputType="number"/>
 
             <EditText
@@ -150,7 +146,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Student Number:"
+                android:hint="@string/student_number_"
                 android:inputType="number"/>
 
         </LinearLayout>
@@ -170,7 +166,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Application Ref No.:"
+                android:hint="@string/application_ref_no"
                 android:inputType="number"/>
 
             <EditText
@@ -181,7 +177,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Institution Name:"
+                android:hint="@string/institution_name"
                 android:inputType="textPersonName"/>
 
         </LinearLayout>
@@ -201,7 +197,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Current Course:"
+                android:hint="@string/current_course"
                 android:inputType="textPersonName"/>
 
             <EditText
@@ -212,7 +208,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Year Of Study:"
+                android:hint="@string/year_of_study"
                 android:inputType="number"/>
 
         </LinearLayout>
@@ -232,7 +228,7 @@ the Financial Aid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="Latest Year of Funding:"
+                android:hint="@string/latest_year_of_funding"
                 android:inputType="number"/>
 
             <EditText
@@ -244,7 +240,7 @@ the Financial Aid"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7"
-                android:hint="Current Funding Status:"
+                android:hint="@string/current_funding_status"
                 android:inputType="textPersonName"/>
 
         </LinearLayout>
@@ -255,7 +251,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lin5" />
@@ -266,7 +262,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="3dp"
-            android:text="Appeal Category"
+            android:text="@string/appeal_category"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -294,7 +290,7 @@ the Financial Aid"
                     android:id="@+id/rbNewAppeal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New Appeal"
+                    android:text="@string/new_appeal"
                     android:checked="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -304,7 +300,7 @@ the Financial Aid"
                     android:id="@+id/rbReturningStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Returning Student"
+                    android:text="@string/returning_student"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -316,7 +312,7 @@ the Financial Aid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:hint="Date Of Appeal"
+                android:hint="@string/date_of_appeal"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -332,7 +328,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lin6" />
@@ -342,7 +338,7 @@ the Financial Aid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:text="Reason For Appeal(tick relevant box)"
+            android:text="@string/reason_for_appeal_tick_relevant_box"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -356,7 +352,7 @@ the Financial Aid"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
@@ -382,74 +378,65 @@ the Financial Aid"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="1. Failure to meet academic performance requirements"/>
+                    android:text="@string/_1_failure_to_meet_academic_performance_requirements"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="- The Financial Aid is aware that there are many circumstances that may lead to students not being able to meet
-academic performance requirements. These may include, but not be limited to, medical conditions,
-death of an immediate family member, etc. Please submit substantive documents to provide proof of
-these circumstances."/>
+                    android:text="@string/the_financial_aid_is_aware_that_there_are_many_circumstances_that_may_lead_to_students_not_being_able_to_meet_academic_performance_requirements_these_may_include_but_not_be_limited_to_medical_conditions_death_of_an_immediate_family_member_etc_please_submit_substantive_documents_to_provide_proof_of_these_circumstances"/>
 
                 <RadioButton
                     android:id="@+id/rbChangeInFinance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="2. Change in financial circumstances" />
+                    android:text="@string/_2_change_in_financial_circumstances" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="- Please provide proof of loss of employment. This may include any of the following:• UIF• Retrenchment letter• Dismissal letterIn cases of a change in job with a lower salary, the Financial Aid requires that you provide official payslips forthe most recent three months
-All documents should be on official letterheads and certified if copies are being provided." />
+                    android:text="@string/please_provide_proof_of_loss_of_employment_this_may_include_any_of_the_following_uif_retrenchment_letter_dismissal_letterin_cases_of_a_change_in_job_with_a_lower_salary_the_financial_aid_requires_that_you_provide_official_payslips_forthe_most_recent_three_months_all_documents_should_be_on_official_letterheads_and_certified_if_copies_are_being_provided" />
 
                 <RadioButton
                     android:id="@+id/rbLossOfBursary"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="3. Loss of Bursary Sponsor" />
+                    android:text="@string/_3_loss_of_bursary_sponsor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="- If you were sponsored for your studies by another entity or person in the past, but subsequently lost
-this sponsorship, please provide proof of the loss of sponsorship on official letterheads. A Financial Aid
-application form, together with all required supporting documentation, needs to be completed and
-submitted with this form." />
+                    android:text="@string/if_you_were_sponsored_for_your_studies_by_another_entity_or_person_in_the_past_but_subsequently_lost_this_sponsorship_please_provide_proof_of_the_loss_of_sponsorship_on_official_letterheads_a_financial_aid_application_form_together_with_all_required_supporting_documentation_needs_to_be_completed_and_submitted_with_this_form" />
 
                 <RadioButton
                     android:id="@+id/rbIncorrectAcademicResults"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="4. Incorrect academic results submitted resulting in nonrenewal of funding" />
+                    android:text="@string/_4_incorrect_academic_results_submitted_resulting_in_nonrenewal_of_funding" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="- If you believe your funding has not been renewed due to erroneous academic results submitted by the
-institution to the Financial Aid, , please attach an official academic results transcript" />
+                    android:text="@string/if_you_believe_your_funding_has_not_been_renewed_due_to_erroneous_academic_results_submitted_by_the_institution_to_the_financial_aid_please_attach_an_official_academic_results_transcript" />
 
                 <RadioButton
                     android:id="@+id/rbGAPYear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="5. I completed a GAP year due to academic performance" />
+                    android:text="@string/_5_i_completed_a_gap_year_due_to_academic_performance" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="- If you did a gap year due to meeting academic performance, but now meet the academic criteria, please
-attach your full academic record with a motivation for reconsideration for funding." />
+                    android:text="@string/if_you_did_a_gap_year_due_to_meeting_academic_performance_but_now_meet_the_academic_criteria_please_attach_your_full_academic_record_with_a_motivation_for_reconsideration_for_funding" />
 
             </RadioGroup>
 
@@ -462,7 +449,7 @@ attach your full academic record with a motivation for reconsideration for fundi
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
             android:gravity="center_horizontal"
-            android:text="-------------------------------------------------------------------"
+            android:text="@string/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reasonLay1" />
@@ -473,11 +460,7 @@ attach your full academic record with a motivation for reconsideration for fundi
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="I acknowledge that any personal information and supporting
-documentation supplied to the Financial Aid is done so voluntarily in order to facilitate the processing of this application. I furthermore
-acknowledge that the information provided by me, is to the best of my knowledge both true and correct, and that I understand that
-any incorrect or inaccurate information or documentation submitted may adversely affect the manner in which NSFAS may comply
-with its obligations."
+            android:text="@string/i_acknowledge_that_any_personal_information_and_supporting_documentation_supplied_to_the_financial_aid_is_done_so_voluntarily_in_order_to_facilitate_the_processing_of_this_application_i_furthermore_acknowledge_that_the_information_provided_by_me_is_to_the_best_of_my_knowledge_both_true_and_correct_and_that_i_understand_that_any_incorrect_or_inaccurate_information_or_documentation_submitted_may_adversely_affect_the_manner_in_which_nsfas_may_comply_with_its_obligations"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -486,7 +469,7 @@ with its obligations."
             android:id="@+id/btnSubmitForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Form"
+            android:text="@string/submit_form"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"

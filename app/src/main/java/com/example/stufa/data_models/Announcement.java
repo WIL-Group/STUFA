@@ -8,80 +8,71 @@ import java.util.Date;
 
 public class Announcement implements Comparator<Announcement>
 {
-    private  String Id;
-    private String Title;
-    private String Message;
-    private String StaffName;
-    private String Date;
-    private boolean Viewed;
-    private String key;
+    private  String id;
+    private String title;
+    private String message;
+    private String date;
+    private boolean viewed;
+    private String staffName;
 
-    public Announcement()
-    {
-    }
+    public Announcement() { }
 
-    public Announcement(String id,String Title, String Message, String StaffName, String Date, boolean Viewed) {
-        this.Title = Title;
-        this.Message = Message;
-        this.Date = Date;
-        this.Id = id;
-        this.Viewed = Viewed;
+    public Announcement(String id, String title, String message, String date,
+                        boolean viewed, String staffName) {
+        this.id = id;
+        this.title = title;
+        this.message = message;
+        this.date = date;
+        this.viewed = viewed;
+        this.staffName = staffName;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getMessage() {
-        return Message;
+        return message;
     }
 
     public void setMessage(String message) {
-        Message = message;
-    }
-
-    public String getStaffName() {
-        return StaffName;
-    }
-
-    public void setStaffName(String staffName) {
-        StaffName = staffName;
+        this.message = message;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public boolean isViewed() {
-        return Viewed;
+        return viewed;
     }
 
     public void setViewed(boolean viewed) {
-        Viewed = viewed;
+        this.viewed = viewed;
     }
 
-    public String getKey() {
-        return key;
+    public String getStaffName() {
+        return staffName;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
     public static Comparator<Announcement> sort = new Comparator<Announcement>() {

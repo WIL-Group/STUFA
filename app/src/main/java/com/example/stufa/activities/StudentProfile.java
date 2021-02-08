@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import com.example.stufa.data_models.Booking;
 import com.example.stufa.data_models.Form;
 import com.example.stufa.data_models.Query;
 import com.example.stufa.data_models.Request;
+import com.example.stufa.data_models.Student;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,21 +51,28 @@ import java.util.Objects;
 
 public class StudentProfile extends AppCompatActivity  implements QueryAdapter.ItemClicked {
 
-    TextView tvStudentNumber, tvStudentNum, tvFullName, tvNameAndSurname, tvBookingDate, tvBookingType, tvDateCreated,
+    TextView tvStudentNumber, tvStudentNum, tvFullName, tvNameAndSurname, tvBookingID, tvBookingNum, tvBookingDate, tvBookingType, tvDateCreated,
             tvIsAttendedTo, tvRequestDate, tvRequestType, tvRequestStudentNumber, tvIsRequestAnswered, tvStudentEmail;
-    EditText etEmailAddress, etCourse, etCampus;
-    Button btnUpdateDetails, btnDeleteBooking, btnEditBooking, btnEditRequest;
+    EditText etEmailAddress, etCourse, etCampus, etFundingType, etBursar;
+    Button btnUpdateDetails, btnDeleteBooking, btnEditBooking, btnEditRequest, btnDeleteBookingDialog,
+            btnCancelDeleteDialog;
+    Dialog deleteBookingDialog;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     FirebaseUser user;
-    DatabaseReference userRer;
+    DatabaseReference userRer, userDatabaseRef;
 
     Form form;
-    String userID, name, surname, studentNumber, email, course, campus, bType, date, bookingDate, studEmail,
+    /*----------strings I use to retrieve Student(user) details from realtime database------------*/
+    String studentNumber, name,surname, email, course , campus, bursar, fundingType;
+
+    /*----------strings I use to read from all table details in my realtime database------------*/
+    String userID, id, bType, date, bookingDate, studEmail,
             bookingStudentNumber, rStudentNumber, requestDate, requestType;
+
     Boolean requestIsAnswered, isAttendedTo;
-    int i = 0;
+    int i = 0, bookingNum;
     RecyclerView recyclerView;
     private QueryAdapter myAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -69,7 +80,6 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
     Query query;
     Booking booking;
     DatabaseReference queryReff, submittedQueryReff, databaseReference, bookingDatabaseRef;
-//    com.google.firebase.database.Bookings booking1;
     com.google.firebase.database.Query query1;
 
 
@@ -83,9 +93,11 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
         tvStudentNum = findViewById(R.id.tvStudentNum);
         tvFullName = findViewById(R.id.tvFullName);
         tvNameAndSurname = findViewById(R.id.tvNameAndSurname);
+        //tvBookingID = findViewById(R.id.tvBookingID);
         tvBookingDate = findViewById(R.id.tvBookingDate);
         tvBookingType = findViewById(R.id.tvBookingType);
-        tvDateCreated = findViewById(R.id.tvDateCreated);
+        tvBookingNum = findViewById(R.id.tvBookingNum);
+        //tvDateCreated = findViewById(R.id.tvDateCreated);
         tvIsAttendedTo = findViewById(R.id.tvIsAttendedTo);
         tvRequestDate = findViewById(R.id.tvRequestDate);
         tvRequestType = findViewById(R.id.tvRequestType);
@@ -95,10 +107,15 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
         etEmailAddress = findViewById(R.id.etEmailAddress);
         etCourse = findViewById(R.id.etCourse);
         etCampus = findViewById(R.id.etCampus);
+        etFundingType = findViewById(R.id.etFundingType);
+        etBursar = findViewById(R.id.etBursar);
         btnUpdateDetails = findViewById(R.id.btnUpdateDetails);
         btnDeleteBooking = findViewById(R.id.btnDeleteBooking);
         btnEditBooking = findViewById(R.id.btnEditBooking);
-        btnEditRequest = findViewById(R.id.btnEditRequest);
+        //btnEditRequest = findViewById(R.id.btnEditRequest);
+        btnDeleteBookingDialog = findViewById(R.id.btnDeleteBookingDialog);
+        btnCancelDeleteDialog = findViewById(R.id.btnCancelDeleteDialog);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -115,62 +132,102 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
         layoutManager = new LinearLayoutManager(StudentProfile.this);
         recyclerView.setLayoutManager(layoutManager);
 
-        readData(new FireBaseCallBack() {
+        btnEditBooking.setVisibility(View.GONE);
+
+        /*------------------Delete Booking dialog--------------------*/
+        deleteBookingDialog = new Dialog(StudentProfile.this);
+        deleteBookingDialog.setContentView(R.layout.custom_delete_booking_background);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Objects.requireNonNull(deleteBookingDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.tips_background));
+        }
+        deleteBookingDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        deleteBookingDialog.setCancelable(true);//when you click the outside of the dialog it will disappear
+        deleteBookingDialog.getWindow().getAttributes().windowAnimations = R.style.tips_animation;
+
+        btnDeleteBookingDialog = deleteBookingDialog.findViewById(R.id.btnDeleteBookingDialog);
+        btnCancelDeleteDialog = deleteBookingDialog.findViewById(R.id.btnCancelDeleteDialog);
+
+//        readData(new FireBaseCallBack() {
+//            @Override
+//            public void onCallBack(ArrayList<Query> list) {
+//                myAdapter = new QueryAdapter(list, StudentProfile.this);
+//                recyclerView.setAdapter(myAdapter);
+//            }
+//        });
+
+        /*---------------Reads the data entered when the user registered----------------*/
+        userDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Students");
+        userDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onCallBack(ArrayList<Query> list) {
-                myAdapter = new QueryAdapter(list, StudentProfile.this);
-                recyclerView.setAdapter(myAdapter);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Student student = snapshot1.getValue(Student.class);
+                    assert student != null;
+
+                    studentNumber = student.getStudentNumber();
+                    email = student.getEmail();
+                    id = student.getId();
+                    name = student.getName();
+                    surname = student.getSurname();
+                    bursar = student.getBursar();
+                    fundingType = student.getFundingType();
+                    campus = student.getCampus();
+
+                    tvStudentNumber.setText(String.format("Student Number: " + "%s", studentNumber));
+                    tvFullName.setText(String.format("Student Fullname: " + "%s %s", name, surname));
+                    etEmailAddress.setText(email);
+                    etFundingType.setText(fundingType);
+                    etBursar.setText(bursar);
+                    etCampus.setText(campus);
+
+                    readBooking();
+
+                    readRequest();
+
+                    readData(new FireBaseCallBack() {
+                        @Override
+                        public void onCallBack(ArrayList<Query> list) {
+                            myAdapter = new QueryAdapter(list, StudentProfile.this);
+                            recyclerView.setAdapter(myAdapter);
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-
-
-        //Reads the data entered when the user registered just to check if we can read back the data
-        DocumentReference documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                assert value != null;
-                /*-----------------For the profile details tab----------------*/
-                studentNumber = value.getString("studentNumber");
-                name = value.getString("name");
-                surname = value.getString("surname");
-                email = value.getString("email");
-                course = value.getString("course");
-                campus = value.getString("campus");
-
-                tvStudentNumber.setText(String.format("Student Number: " + "%s", studentNumber));
-                tvFullName.setText(String.format("Student Fullname: " + "%s %s", name, surname));
-                etEmailAddress.setText(email);
-                etCampus.setText(campus);
-                etCourse.setText(course);
-
-                readBooking();
-
-                readRequest();
-
-            }
-        });
-
 
         btnUpdateDetails.setOnClickListener(v -> {
             updateDetails();
         });
 
         btnDeleteBooking.setOnClickListener(v -> {
-            //deleteBookingData();
+
+            deleteBookingDialog.show();
         });
 
         btnEditBooking.setOnClickListener(v -> {
 
-            Intent intent = new Intent(StudentProfile.this, CreateBooking.class);
-            startActivityForResult(intent, 1);
+            editBooking();
         });
 
-        btnEditRequest.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentProfile.this, CreateRequest.class);
-            startActivityForResult(intent, 2);
+        btnDeleteBookingDialog.setOnClickListener(v -> {
+            deleteBooking();
+            deleteBookingDialog.dismiss();
         });
+
+        btnCancelDeleteDialog.setOnClickListener(v -> deleteBookingDialog.dismiss());
+
+//        btnEditRequest.setOnClickListener(v -> {
+//            Intent intent = new Intent(StudentProfile.this, CreateRequest.class);
+//            startActivityForResult(intent, 2);
+//        });
 
     }
 
@@ -230,6 +287,8 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
                     bookingStudentNumber = details.getStudNum();
                     isAttendedTo = details.isAttendedTo();
                     studEmail = details.getStudEmail();
+                    id = details.getId();
+                    bookingNum = details.getBookingNum();
 
                     if (bookingStudentNumber.equals(studentNumber))
                     {
@@ -239,15 +298,20 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
                         tvBookingType.setText(bType);
                         tvIsAttendedTo.setText(String.format("Is Attended To: %s", isAttendedTo.toString()));
                         tvStudentEmail.setText(studEmail);
+                        //tvBookingID.setText(id);
+                        tvBookingNum.setText(String.format("Your Ticket Number: %s", bookingNum));
                     }
                     else
                     {
-                        tvNameAndSurname.setText("********");
-                        tvStudentNum.setText("********");
-                        tvBookingDate.setText("********");
-                        tvBookingType.setText("********");
-                        tvIsAttendedTo.setText("********");
-                        tvStudentEmail.setText("********");
+                        tvNameAndSurname.setText("******");
+                        tvStudentNum.setText("******");
+                        tvBookingDate.setText("******");
+                        tvBookingType.setText("******");
+                        tvIsAttendedTo.setText("******");
+                        tvStudentEmail.setText("******");
+                        tvBookingNum.setText("******");
+                        //tvBookingID.setText("********");
+
                     }
                 }
             }
@@ -259,137 +323,125 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
         });
     }
 
-    public  void deleteBookingData()
-    {
-        String toDelete = booking.getStudNum();
-
-        query1 = bookingDatabaseRef.orderByChild("studNum").equalTo(toDelete);
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren())
-                {
-                    if(studentNumber.equals(rStudentNumber))
-                    {
-                        ds.getRef().removeValue();
-                    }
-                    else
-                    {
-                        Utilities.show(getApplicationContext(), "Data can't be removed");
-                    }
-
-                }
-                Toast.makeText(StudentProfile.this, query.getqId()+" Removed!",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(StudentProfile.this, "Error! " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        queries.remove(query);
-    }
 
     public void deleteBooking()
     {
-        if(tvNameAndSurname.getText().toString().isEmpty()
-                || tvStudentNum.getText().toString().isEmpty()
-                || tvBookingDate.getText().toString().isEmpty()
-                || tvBookingType.getText().toString().isEmpty()
-                || tvDateCreated.getText().toString().isEmpty())
-        {
-            Utilities.show(StudentProfile.this, "No data to remove!");
-        }
-        else
-        {
-            Booking booking = new Booking();
+        //if()
+        bookingDatabaseRef = FirebaseDatabase.getInstance().getReference("Bookings");
+        bookingDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            bookingDatabaseRef.child("Bookings").setValue(null).addOnSuccessListener(aVoid ->
-                    Utilities.show(StudentProfile.this, "Booking removed!")
-        ).addOnFailureListener(e ->
-        {
-            Utilities.show(StudentProfile.this, "Error: " + e.getMessage());
+                bookingDatabaseRef.removeValue();
+
+                tvNameAndSurname.setText("******");
+                tvStudentNum.setText("******");
+                tvBookingDate.setText("******");
+                tvBookingType.setText("******");
+                tvIsAttendedTo.setText("******");
+                tvStudentEmail.setText("******");
+                tvBookingNum.setText("******");
+
+                Utilities.show(getApplicationContext(),"Booking successfully deleted");
+                //readBooking();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Utilities.show(getApplicationContext(),"Error: " + error.getMessage());
+            }
         });
-//            details.setBookingDay(null);
-//            details.setbType(null);
-//            details.setDate(null);
-//            details.setStudentNumber(null);
 
-            tvNameAndSurname.setText("********");
-            tvStudentNum.setText("********");
-            tvBookingDate.setText("********");
-            tvBookingType.setText("********");
-            tvDateCreated.setText("********");
-        }
+
     }
 
     public void editBooking()
     {
+        //boolean result = booking.isAttendedTo();
+//        if(!booking.isAttendedTo())
+//        {
+            Intent intent = new Intent(StudentProfile.this, EditBooking.class);
+            intent.putExtra(bookingDate, "bookingDate");
+            intent.putExtra(bookingStudentNumber, "bookingStudentNumber");
+            intent.putExtra(bType, "bType");
+            intent.putExtra(studEmail, "studEmail");
+            startActivity(intent);
+//        }
+//        else
+//        {
+//            Utilities.show(getApplicationContext(), "Sorry...Booking is already attended to!");
+//        }
 
     }
 
 
     public void readRequest()
     {
+        /*---------------Reads the data entered when the user registered----------------*/
+//        userDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Students");
+//        userDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                    Student student = snapshot1.getValue(Student.class);
+//                    assert student != null;
+//
+//                    //gets the student number of the current user logged in
+//                    studentNumber = student.getStudentNumber();
 
-        //Reads the data entered when the user registered just to check if we can read back the data
-        DocumentReference documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    //Reads the data entered when the user registered just to check if we can read back the data
+                    bookingDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Requests");
+                    bookingDatabaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                assert value != null;
-                /*-----------------For the profile details tab----------------*/
-                studentNumber = value.getString("studentNumber");
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                Request details = snapshot1.getValue(Request.class);
+                                assert details != null;
 
-                //Reads the data entered when the user registered just to check if we can read back the data
-                bookingDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Requests");
-                bookingDatabaseRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot snapshot1 : snapshot.getChildren())
-                        {
+                                rStudentNumber = details.getStudNum();
+                                requestType = details.getRequestType();
+                                requestDate = details.getDate();
+                                requestIsAnswered = details.isAnswered();
 
-                            Request details = snapshot1.getValue(Request.class);
-                            assert details != null;
+                                //test if the student number of the current logged in user is the
+                                // same as the student number of the the booking the user has sent
+                                if (rStudentNumber.equals(studentNumber))
+                                {
+                                    tvRequestStudentNumber.setText(String.format("Student Number: %s", rStudentNumber));
+                                    tvRequestDate.setText(String.format("Request Date: %s", requestDate));
+                                    tvRequestType.setText(String.format("Request Type: %s", requestType));
+                                    tvIsRequestAnswered.setText(String.format("Request Answered: %s", requestIsAnswered.toString()));
+                                }
+                                else
+                                {
+                                    tvRequestStudentNumber.setText("********");
+                                    tvRequestDate.setText("********");
+                                    tvRequestType.setText("********");
+                                    tvIsRequestAnswered.setText("********");
+                                }
 
-                            studentNumber = value.getString("studentNumber");
 
-                            rStudentNumber = details.getStudNum();
-                            requestType = details.getRequestType();
-                            requestDate = details.getDate();
-                            requestIsAnswered = details.isAnswered();
-
-                            if(rStudentNumber.equals(studentNumber))
-                            {
-                                tvRequestStudentNumber.setText(rStudentNumber);
-                                tvRequestDate.setText(requestDate);
-                                tvRequestType.setText(requestType);
-                                tvIsRequestAnswered.setText(requestIsAnswered.toString());
-                            }
-                            else
-                            {
-                                tvRequestDate.setText("********");
-                                tvRequestType.setText("********");
-                                tvRequestType.setText("********");
-                                tvIsRequestAnswered.setText("********");
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
 
-            }
-        });
-    }
+//                }
+//            }
 
-    public void editRequest()
-    {
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
 
     }
 
@@ -402,12 +454,22 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 queries.clear();
 
-                for(DataSnapshot ds : snapshot.getChildren())
+                for (DataSnapshot ds : snapshot.getChildren())
                 {
-                    query = ds.getValue(Query.class);
-                    queries.add(query);
+                    Request details = ds.getValue(Request.class);
+                    assert details != null;
+
+                    String qStudentNumber = details.getStudNum();
+
+                    if (qStudentNumber.equals(studentNumber)) {
+                        query = ds.getValue(Query.class);
+                        queries.add(query);
+                    }
+
                 }
-                fireBaseCallBack.onCallBack(queries);
+                    fireBaseCallBack.onCallBack(queries);
+
+
             }
 
             @Override
@@ -419,13 +481,9 @@ public class StudentProfile extends AppCompatActivity  implements QueryAdapter.I
     }
 
     @Override
-    public void onItemClicked(int index) {
-
-    }
-
-    interface  FireCallBack
+    public void onItemClicked(int index)
     {
-        void onFire(Booking booking);
+
     }
 
     interface FireBaseCallBack

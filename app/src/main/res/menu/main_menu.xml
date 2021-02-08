@@ -3,60 +3,50 @@
 
     <group android:checkableBehavior="single">
 
-<!--        <item-->
-<!--            android:id="@+id/nav_refresh_bookings"-->
-<!--            android:icon="@drawable/refresh"-->
-<!--            android:title="Refresh Bookings" />-->
-
         <item
             android:id="@+id/nav_announcements"
             android:icon="@drawable/announcement"
-            android:title="Announcements" />
+            android:title="@string/announcements" />
 
         <item
             android:id="@+id/nav_create_query"
             android:icon="@drawable/query"
-            android:title="Create Query" />
+            android:title="@string/create_query" />
 
         <item
             android:id="@+id/nav_create_request"
             android:icon="@drawable/request"
-            android:title="Create Request" />
+            android:title="@string/create_request" />
 
 
         <item
             android:id="@+id/nav_create_booking"
             android:icon="@drawable/booking"
-            android:title="Create Booking" />
+            android:title="@string/create_booking" />
 
         <item
             android:id="@+id/nav_fill_form"
             android:icon="@drawable/fill_in_form"
-            android:title="Fill In A Form" />
+            android:title="@string/fill_in_a_form" />
 
     </group>
 
 
-    <item android:title="Profile">
+    <item android:title="@string/profile">
 
         <menu>
 
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/nav_login"
-                    android:icon="@drawable/lock"
-                    android:title="Login" />
-
-                <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/person"
-                    android:title="Profile" />
+                    android:title="@string/profile" />
 
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/lock_out"
-                    android:title="Logout" />
+                    android:title="@string/logout" />
 
             </group>
         </menu>

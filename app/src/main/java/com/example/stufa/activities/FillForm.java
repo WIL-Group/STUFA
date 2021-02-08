@@ -3,11 +3,15 @@ package com.example.stufa.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,6 +19,8 @@ import android.widget.RadioGroup;
 import com.example.stufa.R;
 import com.example.stufa.app_utilities.Utilities;
 import com.example.stufa.data_models.Form;
+import com.example.stufa.data_models.Student;
+import com.example.stufa.fragments.DatePickerFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +33,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-public class FillForm extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class FillForm extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     /*--------------------------------------Variables----------------------------------------*/
     EditText etStudName, etStudSurname, etIDNumber, etStudNumber, etAppRefNumber, etInstNumber,
@@ -43,17 +55,20 @@ public class FillForm extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
-    DatabaseReference formRer;
+    DatabaseReference formRer, userDatabaseRef;
     int i = 0;
 
+    String id, name, surname, email, studentNumber, fundingType, bursar, campus;
+
     Form form;
-    String userID, name, surname, idNumber, studentNumber, applicationRefNumber, instNumber,
+    String userID, idNumber, applicationRefNumber, instNumber, currentDateString, currentYearString,
             courseOrProgramme, yearOfStudy, lastYearOfFunding, currentFundingStatus, dateOfAppeal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_fill_form);
 
         /*------------------------------------Hooks-----------------------------------------*/
@@ -92,55 +107,98 @@ public class FillForm extends AppCompatActivity {
         userID = firebaseAuth.getCurrentUser().getUid();
         formRer = FirebaseDatabase.getInstance().getReference().child("Forms");
 
-        //Reads the data entered when the user registered just to check if we can read back the data
-        DocumentReference documentReference = firestore.collection("users").document(userID);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+        /*------------------sets the date format---------------------*/
+        String DateFormat = "yyy/MM/dd";
+        String YearFormat = "yyyy";
+        currentDateString = new SimpleDateFormat(DateFormat, Locale.getDefault()).format(new Date());
+        currentYearString = new SimpleDateFormat(YearFormat, Locale.getDefault()).format(new Date());
 
-                assert value != null;
-                studentNumber = value.getString("studentNumber");
-                name = value.getString("name");
-                surname = value.getString("surname");
 
-                etStudNumber.setText(studentNumber);
-                etStudName.setText(name);
-                etStudSurname.setText(surname);
-            }
-        });
-
-        formRer.addValueEventListener(new ValueEventListener() {
+        /*---------------Reads the data entered when the user registered----------------*/
+        userDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Students");
+        userDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if(snapshot.exists())
-                {
-                    //increments the value when data has changes or updated
-                    i = (int)snapshot.getChildrenCount();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Student student = snapshot1.getValue(Student.class);
+                    assert student != null;
+
+                    studentNumber = student.getStudentNumber();
+                    email = student.getEmail();
+                    id = student.getId();
+                    name = student.getName();
+                    surname = student.getSurname();
+                    fundingType = student.getFundingType();
+                    bursar = student.getBursar();
+                    campus = student.getCampus();
+
+                    etStudNumber.setText(studentNumber);
+                    etStudName.setText(name);
+                    etStudSurname.setText(surname);
+                    etIDNumber.setText(id);
+
                 }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
 
+        etYearOfStudy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+
+                etYearOfStudy.setText(currentYearString);
+            }
+        });
+
+        etDateOfAppeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+
+                etDateOfAppeal.setText(currentDateString);
             }
         });
 
         btnSubmitForm.setOnClickListener(v -> {
 
             //submits the form to the firebase database and sends it to the staff side to view
-            if (!etStudNumber.getText().toString().trim().equals(studentNumber))
-            {
-                Utilities.show(FillForm.this, "Please enter your correct student number!");
-            }
-            else
-            {
                 createForm();
-            }
-
         });
 
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+    {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        //Disable all SUNDAYS and SATURDAYS between Min and Max Dates
+//        for (Calendar loopdate = c; c.before(c); c.add(Calendar.DATE, 1), loopdate = c) {
+//            int dayOfWeek = loopdate.get(Calendar.DAY_OF_WEEK);
+//            if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
+//                Calendar[] disabledDays =  new Calendar[1];
+//                disabledDays[0] = loopdate;
+//                datePickerDialog.setDisabledDays(disabledDays);
+//            }
+//        }
+
+        currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        currentYearString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
     }
 
 
@@ -173,38 +231,28 @@ public class FillForm extends AppCompatActivity {
             currentFundingStatus = etCurrentFundingStatus.getText().toString().trim();
             dateOfAppeal = etDateOfAppeal.getText().toString().trim();
 
+
             /*----------------set my entered data to my Forms firebase database-----------------*/
             form.setStudentNumber(studentNumber);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setName(name);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setSurname(surname);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
-            form.setIDNumber(idNumber);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
+            form.setIdNumber(idNumber);
             form.setAppRef(applicationRefNumber);
             form.setInstName(instNumber);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setCourse(courseOrProgramme);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setYearOfStudy(yearOfStudy);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setLastYearOfStudy(lastYearOfFunding);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setFundingStatus(currentFundingStatus);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
             form.setDateOfAppeal(dateOfAppeal);
-            formRer.child(String.valueOf(i + 1)).setValue(form);
+            form.setId(id);
 
             if(rbNewAppeal.isChecked())
             {
-                form.setNewAppeal(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
+                form.setNewApplicant(true);
             }
             else if (rbReturningStudent.isChecked())
             {
                 form.setReturningStudent(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
             }
             else
             {
@@ -213,38 +261,32 @@ public class FillForm extends AppCompatActivity {
 
             if(rbFailure.isChecked())
             {
-                form.setFailureToMeetAcademicPerformanceRequirements(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
+                form.setFailureToMeet(true);
             }
             else if(rbChangeInFinance.isChecked())
             {
                 form.setChangeInFinancialCircumstances(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
             }
             else if (rbLossOfBursary.isChecked())
             {
                 form.setLossOfBursarySponsor(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
             }
             else if(rbIncorrectAcademicResults.isChecked())
             {
-                form.setIncorrectAcademicResultsSubmittedResultingInNonrenewalOfFunding(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
+                form.setIncorrectAcademicResults(true);
             }
             else if(rbGAPYear.isChecked())
             {
-                form.setiCompletedAGapYearDueToAcademicPerformance(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
+                form.setGapYear(true);
             }
             if (cbFullNameDeclaration.isChecked())
             {
                 form.setFullNameDeclaration(true);
-                formRer.child(String.valueOf(i + 1)).setValue(form);
             }
 
+            formRer.push().setValue(form);
             clearData();
             FillForm.this.finish();
-            //startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
             Utilities.show(FillForm.this, "Form submitted!");
         }
 
